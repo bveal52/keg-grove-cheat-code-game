@@ -1,0 +1,13 @@
+body {
+    background: #DDDDDD;
+    margin: 0;
+}
+
+.navbar {
+    background-color: #800000;
+    color: white;
+}
+
+.page-container {
+    margin-top: 75px;
+}
