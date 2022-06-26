@@ -17,6 +17,8 @@ class Player {
 			y: 0
 		}
 
+		this.rotation = 0
+
 		const image = new Image()
 		image.src = './imgs/beer_guy.png'
 
@@ -39,14 +41,21 @@ class Player {
 		
 		}
 	
-	
 	}
-
 
 	draw() {
 
+		c.save()
+		c.translate(player.position.x + player.width / 2, player.position.y + player.height / 2)
+
+		c.rotate(this.rotation)
+
+		c.translate(-player.position.x - player.width / 2, -player.position.y - player.height / 2)
+
 		c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-		
+
+
+		c.restore()
 	}
 
 	update() {
@@ -57,7 +66,32 @@ class Player {
 	}
 }
 
+class Projectile {
+
+	constructor(position, velocity){
+		this.position = position
+		this.velocity = velocity
+
+		this.radius = 3
+	}
+
+	draw(){
+		c.beginPath()
+		c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false)
+		c.fillStyle = "red"
+		c.fill()
+		c.closePath()
+	}
+
+	update(){
+		this.draw()
+		this.position.x += this.velocity.x
+		this.position.y += this.velocity.y
+	}
+}
+
 const player = new Player()
+const projectiles = []
 const keys = {
 	a: {
 		pressed: false
@@ -77,12 +111,25 @@ function animate(){
 	c.fillRect(0,0, canvas.width, canvas.height)
 	player.update()
 
-	if(keys.a.pressed) {
+	projectiles.forEach((projectile, index) => {
+	
+		if(projectile.position.y + projectile.radius <= 0) {
+			projectiles.splice(index, 1)
+		}
+		else {
+			projectile.update()
+		}
+	})
+
+	if(keys.a.pressed && player.position.x >= 0) {
 		player.velocity.x = -5
-	} else if (keys.d.pressed) {
+		player.rotation = -0.15
+	} else if (keys.d.pressed && player.position.x <= canvas.width - player.width) {
 		player.velocity.x = 5
+		player.rotation = 0.15
 	} else {
 		player.velocity.x = 0
+		player.rotation = 0
 	}
 	
 	
@@ -94,16 +141,17 @@ animate()
 addEventListener('keydown', ({key}) => {
 	switch(key) {
 		case 'a':
-			console.log("left")
+			//console.log("left")
 			keys.a.pressed = true
 			break;
 		case 'd':
-			console.log("right")
+			//console.log("right")
 			keys.d.pressed = true
 			break;
 		case ' ':
 			console.log("space")
-			keys.space.pressed = true
+			projectiles.push(new Projectile({x: player.position.x + player.width / 2, y: player.position.y}, {x: 0, y: -10}))
+			console.log(projectiles)
 			break;
 	}
 })
@@ -111,16 +159,15 @@ addEventListener('keydown', ({key}) => {
 addEventListener('keyup', ({key}) => {
 	switch(key) {
 		case 'a':
-			console.log("leftoff")
+			//console.log("leftoff")
 			keys.a.pressed = false
 			break;
 		case 'd':
-			console.log("rightoff")
+			//console.log("rightoff")
 			keys.d.pressed = false
 			break;
 		case ' ':
-			console.log("spaceoff")
-			keys.space.pressed = false
+			//console.log("spaceoff")
 			break;
 	}
 })
