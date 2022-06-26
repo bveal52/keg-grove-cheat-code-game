@@ -99,6 +99,12 @@ const keys = {
 	d: {
 		pressed: false
 	},
+	ArrowLeft: {
+		pressed: false
+	}, 
+	ArrowRight: {
+		pressed: false
+	},
 	space: {
 		pressed: false
 	}
@@ -121,10 +127,10 @@ function animate(){
 		}
 	})
 
-	if(keys.a.pressed && player.position.x >= 0) {
+	if(keys.a.pressed && player.position.x >= 0 || keys.ArrowLeft.pressed && player.position.x >= 0) {
 		player.velocity.x = -5
 		player.rotation = -0.15
-	} else if (keys.d.pressed && player.position.x <= canvas.width - player.width) {
+	} else if (keys.d.pressed && player.position.x <= canvas.width - player.width || keys.ArrowRight.pressed && player.position.x <= canvas.width - player.width) {
 		player.velocity.x = 5
 		player.rotation = 0.15
 	} else {
@@ -139,6 +145,7 @@ animate()
 
 
 addEventListener('keydown', ({key}) => {
+	console.log(key)
 	switch(key) {
 		case 'a':
 			//console.log("left")
@@ -148,9 +155,17 @@ addEventListener('keydown', ({key}) => {
 			//console.log("right")
 			keys.d.pressed = true
 			break;
+		case 'ArrowLeft':
+			//console.log("arrowleft")
+			keys.ArrowLeft.pressed = true
+			break;
+		case 'ArrowRight':
+			//console.log("arrowright")
+			keys.ArrowRight.pressed = true
+			break;
 		case ' ':
-			console.log("space")
-			projectiles.push(new Projectile({x: player.position.x + player.width / 2, y: player.position.y}, {x: 0, y: -10}))
+			//console.log("space")
+			projectiles.push(new Projectile({x: player.position.x + player.width / 2, y: player.position.y}, {x: 0, y: -15}))
 			console.log(projectiles)
 			break;
 	}
@@ -165,6 +180,13 @@ addEventListener('keyup', ({key}) => {
 		case 'd':
 			//console.log("rightoff")
 			keys.d.pressed = false
+			break;
+		case 'ArrowLeft':
+			//console.log("arrowleftoff")
+			keys.ArrowLeft.pressed = false
+			break;
+		case 'ArrowRight':
+			keys.ArrowRight.pressed = false
 			break;
 		case ' ':
 			//console.log("spaceoff")
