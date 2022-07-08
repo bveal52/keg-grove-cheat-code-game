@@ -90,8 +90,98 @@ class Projectile {
 	}
 }
 
+class Invader {
+	constructor({position}){
+
+		this.velocity = {
+			x: 0,
+			y: 0
+		}
+
+		//this.rotation = 0
+
+		const image = new Image()
+		image.src = './imgs/beer_mug.png'
+
+		image.onload = () => {
+
+			const scale = 0.0625
+
+
+			this.image = image
+			this.width = image.width * scale
+			this.height = image.height * scale
+
+			this.position = {
+				x: position.x,
+				y: position.y
+			}
+
+		
+		}
+	
+	}
+
+	draw() {
+
+		c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
+
+	}
+
+	update({velocity}) {
+		if(this.image)	{
+			this.draw()
+			this.position.x += velocity.x
+			this.position.y += velocity.y
+		 }
+	}
+}
+
+class Grid {
+	constructor() {
+		this.position = {
+			x: 0,
+			y: 0
+		}
+
+		this.velocity = {
+			x: 3,
+			y: 0
+		}
+
+		this.invaders = []
+
+		const columns = Math.floor(Math.random() * 10 + 5)
+		const rows = Math.floor(Math.random() * 5 + 2)
+
+		this.width = columns * 50
+		
+
+		for (let i = 0; i < columns; i++) {
+			for (let j = 0; j < rows; j++) {
+				this.invaders.push(new Invader({position: {x: i * 50, y: j * 50}}))
+			}
+		}
+		console.log(this.invaders);
+	}
+
+	update() {
+		this.position.x += this.velocity.x
+		this.position.y += this.velocity.y
+
+		this.velocity.y = 0
+
+		if(this.position.x + this.width >= canvas.width || this.position.x <= 0) {
+			this.velocity.x = -this.velocity.x
+			this.velocity.y = 30
+		}
+	}
+}
+
 const player = new Player()
 const projectiles = []
+const grids = []
+
 const keys = {
 	a: {
 		pressed: false
@@ -111,6 +201,9 @@ const keys = {
 
 }
 
+let frames = 0
+let randomInterval = Math.floor(Math.random() * 500) + 5000
+
 function animate(){
 	requestAnimationFrame(animate)
 	c.fillStyle = 'black'
@@ -120,11 +213,20 @@ function animate(){
 	projectiles.forEach((projectile, index) => {
 	
 		if(projectile.position.y + projectile.radius <= 0) {
-			projectiles.splice(index, 1)
+			setTimeout(() => {
+				projectiles.splice(index, 1)
+			}, 0)
 		}
 		else {
 			projectile.update()
 		}
+	})
+
+	grids.forEach((grid) => {
+		grid.update()
+		grid.invaders.forEach(invader => {
+			invader.update({velocity: grid.velocity})
+		})
 	})
 
 	if(keys.a.pressed && player.position.x >= 0 || keys.ArrowLeft.pressed && player.position.x >= 0) {
@@ -137,6 +239,15 @@ function animate(){
 		player.velocity.x = 0
 		player.rotation = 0
 	}
+
+	if(frames % randomInterval === 0) {
+		grids.push(new Grid())
+		frames = 0
+		randomInterval = Math.floor(Math.random() * 500) + 3000
+		console.log(randomInterval);
+	}
+
+	frames++
 	
 	
 }
