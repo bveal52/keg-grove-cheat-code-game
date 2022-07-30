@@ -4,11 +4,14 @@
  */
 
 const canvas = document.querySelector("canvas");
+const scoreEl = document.querySelector("#scoreEl");
 const gamepadCanvas = document.querySelector("gamepad-canvas")
 const c = canvas.getContext("2d");
-const gamepadC = gamepadCanvas.getContext("2d");
+const gamepadC = canvas.getContext("2d");
 
-canvas.width = innerWidth;
+// canvas.width = 1024;
+// canvas.height = 576;
+canvas.width = innerWidth / 1.5;
 canvas.height = innerHeight / 1.5;
 
 class Player {
@@ -20,6 +23,8 @@ class Player {
 		}
 
 		this.rotation = 0
+		this.opacity = 1
+		
 
 		const image = new Image()
 		image.src = './imgs/beer_guy.png'
@@ -48,6 +53,8 @@ class Player {
 	draw() {
 
 		c.save()
+
+		c.globalAlpha = this.opacity
 		c.translate(player.position.x + player.width / 2, player.position.y + player.height / 2)
 
 		c.rotate(this.rotation)
@@ -89,6 +96,46 @@ class Projectile {
 		this.draw()
 		this.position.x += this.velocity.x
 		this.position.y += this.velocity.y
+	}
+}
+
+class Particle {
+
+	constructor({
+		position,
+		velocity,
+		radius,
+		color,
+		fades
+	}) {
+		this.position = position
+		this.velocity = velocity
+		this.radius = radius
+		this.color = color
+		this.opactiy = 1
+		this.fades = fades
+
+	}
+
+	draw() {
+		c.save()
+		c.globalAlpha = this.opactiy
+		c.beginPath()
+		c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2, false)
+		c.fillStyle = this.color
+		c.fill()
+		c.closePath()
+		c.restore()
+	}
+
+	update() {
+		this.draw()
+		this.position.x += this.velocity.x
+		this.position.y += this.velocity.y
+
+		if(this.fades) {
+		this.opactiy -= 0.01
+		}
 	}
 }
 
@@ -232,6 +279,7 @@ const player = new Player()
 const projectiles = []
 const grids = []
 const invaderProjectiles = []
+const particles = []
 
 const keys = {
 	a: {
@@ -255,20 +303,106 @@ const keys = {
 let frames = 0
 let randomInterval = Math.floor(Math.random() * 500) + 5000
 let numEnemies = 0
+let game = {
+	score: 0,
+	lives: 3,
+	level: 1,
+	over: false,
+	active: true
+}
+let score = 0
+
+for (let i = 0; i < 100; i++) {
+	particles.push(new Particle({
+		position: {
+			x: Math.floor(Math.random() * canvas.width),
+			y: Math.floor(Math.random() * canvas.height)
+		},
+		velocity: {
+			x: 0,
+			y: 0.5
+		},
+		radius: Math.random() * 3,
+		color: "white"
+	}))
+}
+
+
+function createParticles({object, color, fades}) {
+	for (let i = 0; i < 25; i++) {
+		particles.push(new Particle({
+			position: {
+				x: object.position.x + object.width / 2,
+				y: object.position.y + object.height / 2
+			},
+			velocity: {
+				x: (Math.random() - 0.5) * 2,
+				y: (Math.random() - 0.5) * 2
+			},
+			radius: Math.random() * 3,
+			color: color || "white",
+			fades
+		}))
+	}
+
+}
 
 function animate() {
+	if(!game.active) return
 	requestAnimationFrame(animate)
 	c.fillStyle = 'black'
 	c.fillRect(0, 0, canvas.width, canvas.height)
 	player.update()
 
-	invaderProjectiles.forEach((invaderProjectile) => {
-		invaderProjectile.update()
+	particles.forEach((particle, index) => {
+
+		if(particle.position.y - particle.radius >= canvas.height){
+			particle.position.x = Math.random() * canvas.width
+			particle.position.y = -particle.radius
+		}
+		
+		if (particle.opactiy <= 0) {
+			setTimeout(() => {
+			particles.splice(index, 1)
+			}, 0)
+		} else {
+			particle.update()
+		}
+	})
+
+
+	invaderProjectiles.forEach((invaderProjectile, index) => {
+		//garbage collection
+		if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
+			setTimeout(() => {
+				invaderProjectiles.splice(index, 1)
+			}, 0)
+		} else {
+			invaderProjectile.update()
+		}
+
+		//projectile hits player
+		if (invaderProjectile.position.y + invaderProjectile.height >= player.position.y && invaderProjectile.position.x + invaderProjectile.width >= player.position.x && invaderProjectile.position.x <= player.position.x + player.width) {
+			setTimeout(() => {
+				invaderProjectiles.splice(index, 1)
+				player.opacity = 0
+				game.over = true
+			}, 0)
+
+			setTimeout(() => {
+				game.active = false
+			}, 2000)
+
+			console.log("you lose");
+			createParticles({object: player, color: "red", fades: true})
+		}
+
+		//console.log(invaderProjectiles);
 	})
 
 
 	projectiles.forEach((projectile, index) => {
-
+		//garbage collection
 		if (projectile.position.y + projectile.radius <= 0) {
 			setTimeout(() => {
 				projectiles.splice(index, 1)
@@ -283,7 +417,7 @@ function animate() {
 
 		numEnemies = grid.invaders.length
 
-		// //spawn projectiles
+		 //spawn projectiles
 		if (frames % 100 === 0 && grid.invaders.length > 0) {
 			const invader = grid.invaders[Math.floor(Math.random() * grid.invaders.length)]
 			invader.shoot(invaderProjectiles)
@@ -295,7 +429,10 @@ function animate() {
 			})
 
 			projectiles.forEach((projectile, j) => {
+
+				//projectile hits invader
 				if (projectile.position.y - projectile.radius <= invader.position.y + invader.height && projectile.position.x + projectile.radius >= invader.position.x && projectile.position.x - projectile.radius <= invader.position.x + invader.width && projectile.position.y + projectile.radius >= invader.position.y) {
+
 					setTimeout(() => {
 						const invaderFound = grid.invaders.find((invader2) => invader2 === invader)
 
@@ -304,6 +441,11 @@ function animate() {
 
 						//remove invader and projectile
 						if (invaderFound && projectileFound) {
+							score += 100
+							scoreEl.innerHTML = score
+
+							createParticles({object: invader, fades: true, })
+
 							grid.invaders.splice(i, 1)
 							projectiles.splice(j, 1)
 
@@ -335,18 +477,19 @@ function animate() {
 	}
 
 	//only spawn new eme
-	// if (frames % randomInterval === 0 && numEnemies === 0) {
-	// 	grids.push(new Grid())
-	// 	frames = 0
-	// 	randomInterval = Math.floor(Math.random() * 500) + 2000
-	// 	console.log(randomInterval);
-	// }
-
-	if(numEnemies === 0){
-		console.log("test");
+	if (frames % randomInterval === 0) {
 		grids.push(new Grid())
 		frames = 0
+		randomInterval = Math.floor(Math.random() * 500) + 2000
+		console.log(randomInterval);
 	}
+
+	//testing for enemeies only
+	// if(numEnemies === 0){
+	// 	console.log("test");
+	// 	grids.push(new Grid())
+	// 	frames = 0
+	// }
 
 
 
@@ -363,6 +506,7 @@ addEventListener('keydown', ({
 	key
 }) => {
 	console.log(key)
+	if (game.over) return
 	switch (key) {
 		case 'a':
 			//console.log("left")
