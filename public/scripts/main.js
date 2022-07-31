@@ -312,6 +312,8 @@ let game = {
 }
 let score = 0
 
+
+//create background particles
 for (let i = 0; i < 100; i++) {
 	particles.push(new Particle({
 		position: {
@@ -327,7 +329,7 @@ for (let i = 0; i < 100; i++) {
 	}))
 }
 
-
+//create particles for collisions to player or invader
 function createParticles({object, color, fades}) {
 	for (let i = 0; i < 25; i++) {
 		particles.push(new Particle({
@@ -347,8 +349,11 @@ function createParticles({object, color, fades}) {
 
 }
 
+//animation loop for game
 function animate() {
-	if(!game.active) return
+	if(!game.active) {
+		window.location.href = "./title-screen.html"
+	}
 	requestAnimationFrame(animate)
 	c.fillStyle = 'black'
 	c.fillRect(0, 0, canvas.width, canvas.height)
