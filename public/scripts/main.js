@@ -3,16 +3,47 @@
  * Brady Veal
  */
 
-const canvas = document.querySelector("canvas");
+
+let canvas = document.querySelector("#canvas");
 const scoreEl = document.querySelector("#scoreEl");
-const gamepadCanvas = document.querySelector("gamepad-canvas")
-const c = canvas.getContext("2d");
-const gamepadC = canvas.getContext("2d");
+//const gamepadCanvas = document.querySelector("#gamepad-canvas")
+let c = canvas.getContext("2d");
+//const gamepadC = canvas.getContext("2d");
 
 // canvas.width = 1024;
-// canvas.height = 576;
-canvas.width = innerWidth / 1.5;
-canvas.height = innerHeight / 1.5;
+// canvas.height = 768;
+
+//upper 2/3's of the screen is the game
+canvas.width = window.innerWidth / 1.5;
+canvas.height = window.innerHeight;
+let gameScreenBuffer = window.innerHeight / 1.5;
+console.log(window.innerWidth / 1.5, window.innerHeight);
+console.log(canvas.width, canvas.height);
+
+
+function resize_canvas(){
+	canvas = document.getElementById("canvas");
+	if (canvas.width < 768 || canvas.height > 1500) {
+		canvas.width = window.innerWidth;
+		console.log(canvas.width);
+	}
+
+	if (canvas.height < 1200 || canvas.height > 1500) {
+		canvas.height = window.innerHeight;
+		console.log(canvas.height);
+	}
+}
+
+
+//bottom 1/3 of the screen is the gamepad
+// gamepadCanvas.width = innerWidth / 1.5;
+// gamepadCanvas.height = innerHeight / 3;
+// console.log(gamepadCanvas.height);
+//gamepadC.moveTo(innerWidth / 2, innerHeight / 2);
+
+
+
+
 
 class Player {
 	constructor() {
@@ -40,7 +71,7 @@ class Player {
 
 			this.position = {
 				x: canvas.width / 2 - this.width / 2,
-				y: canvas.height - this.height - 20
+				y: gameScreenBuffer - this.height - 20
 				// x: 200,
 				// y: 200
 			}
@@ -139,6 +170,64 @@ class Particle {
 	}
 }
 
+class ScoreImg {
+
+	constructor({
+		position,
+		velocity,
+		fades
+	}) {
+		this.position = position
+		this.velocity = velocity
+
+
+		const image = new Image()
+		image.src = './imgs/points.png'
+
+		image.onload = () => {
+
+			const scale = 1
+
+			this.image = image
+			this.width = image.width * scale
+			this.height = image.height * scale
+
+			// this.position = {
+			// 	x: canvas.width / 2 - this.width / 2,
+			// 	y: gameScreenBuffer - this.height - 20
+			// 	// x: 200,
+			// 	// y: 200
+			// }
+
+
+		}
+
+		this.opactiy = 1
+		this.fades = fades
+
+	}
+
+	draw() {
+		c.save()
+		c.globalAlpha = this.opactiy
+		c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
+		c.restore()
+	}
+
+	update() {
+
+		if (this.image) {
+			this.draw()
+			this.position.x += this.velocity.x
+			this.position.y += this.velocity.y
+
+			if(this.fades) {
+			this.opactiy -= 0.01
+			}
+		}
+	}
+}
+
 class InvaderProjectile {
 
 	constructor({
@@ -153,7 +242,7 @@ class InvaderProjectile {
 	}
 
 	draw() {
-		c.fillStyle = "white"
+		c.fillStyle = "yellow"
 		c.fillRect(this.position.x, this.position.y, this.width, this.height)
 	}
 
@@ -242,8 +331,8 @@ class Grid {
 
 		this.invaders = []
 
-		const columns = Math.floor(Math.random() * 10 + 5)
-		const rows = Math.floor(Math.random() * 5 + 2)
+		const columns = Math.floor(Math.random() * 2 + 3)
+		const rows = Math.floor(Math.random() * 2 + 2)
 
 		this.width = columns * 50
 
@@ -280,6 +369,7 @@ const projectiles = []
 const grids = []
 const invaderProjectiles = []
 const particles = []
+const scoreImgs = []
 
 const keys = {
 	a: {
@@ -308,7 +398,7 @@ let game = {
 	lives: 3,
 	level: 1,
 	over: false,
-	active: true
+	active: false
 }
 let score = 0
 
@@ -349,19 +439,145 @@ function createParticles({object, color, fades}) {
 
 }
 
+Button = function(x, y, width, height, color) {
+
+    this.active = false;
+    this.color = color;
+    this.height = height;
+    this.width = width;
+    this.x = x;
+    this.y = y;
+
+  }
+
+  Button.prototype = {
+
+    // returns true if the specified point lies within the rectangle:
+    containsPoint:function(x, y) {
+
+      // if the point is outside of the rectangle return false:
+      if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
+
+        return false;
+
+      }
+
+      return true;
+
+    }
+
+  };
+
+  controller = {
+
+    buttons:[
+
+      new Button(100, canvas.height / 1.3, 150, 150, "#f09000"),
+      new Button(500, canvas.height / 1.3, 150, 150, "#0090f0"),
+      new Button(700, canvas.height / 1.3, 150, 150, "#0090f0")
+
+    ],
+
+    testButtons:function(target_touches) {
+
+      var button, index0, index1, touch;
+
+      // loop through all buttons:
+      for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
+
+        button = this.buttons[index0];
+        button.active = false;
+
+        // loop through all touch objects:
+        for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
+
+          touch = target_touches[index1];
+
+          // make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
+          if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
+
+            button.active = true;
+            break;// once the button is active, there's no need to check if any other points are inside, so continue
+
+          }
+
+        }
+
+      }
+
+	}
+
+
+  };
+
+// dynamic score functionality?
+
+// function createScoreImg({object, fades}) {
+// 	for (let i = 0; i < 1; i++) {
+// 		scoreImgs.push(new ScoreImg({
+// 			position: {
+// 				x: object.position.x + object.width / 2,
+// 				y: object.position.y + object.height / 2
+// 			},
+// 			velocity: {
+// 				x: (Math.random() - 0.5) * 2,
+// 				y: (Math.random() - 0.5) * 2
+// 			},
+// 			fades
+// 		}))
+// 	}
+
+// }
+
+function renderButtons(buttons) {
+
+	var button, index;
+
+	//c.fillStyle = "#202830";
+	//c.fillRect(0, 150, canvas.width, canvas.height);
+
+	for (index = buttons.length - 1; index > -1; -- index) {
+
+	  button = buttons[index];
+
+	  c.fillStyle = button.color;
+	  c.fillRect(button.x, button.y, button.width, button.height);
+
+	}
+
+  }
+
 //animation loop for game
 function animate() {
 	if(!game.active) {
-		window.location.href = "./title-screen.html"
+		//window.location.href = "title-screen.html"
+		toggleScreen("title-window",true)
+		toggleScreen("game-window", false)
+		return
 	}
+
+	//create canvas background
 	requestAnimationFrame(animate)
 	c.fillStyle = 'black'
-	c.fillRect(0, 0, canvas.width, canvas.height)
+	c.fillRect(0, 0, canvas.width, canvas.height / 1.5)
+	c.fillStyle = 'white'
+	c.fillRect(0, canvas.height / 1.5, canvas.width, canvas.height)
+
+	renderButtons(controller.buttons)
+
+	//create canvas buttons
+
+	//create gamepad controls
+	// gamepadC.fillStyle = 'white'
+	// gamepadC.fillRect(0, 0, gamepadCanvas.width, gamepadCanvas.height)
+	// gamepadC.fillStyle = 'black'
+
+
 	player.update()
 
 	particles.forEach((particle, index) => {
 
-		if(particle.position.y - particle.radius >= canvas.height){
+		if(particle.position.y - particle.radius >= gameScreenBuffer){
 			particle.position.x = Math.random() * canvas.width
 			particle.position.y = -particle.radius
 		}
@@ -378,7 +594,7 @@ function animate() {
 
 	invaderProjectiles.forEach((invaderProjectile, index) => {
 		//garbage collection
-		if (invaderProjectile.position.y + invaderProjectile.height >= canvas.height) {
+		if (invaderProjectile.position.y + invaderProjectile.height >= gameScreenBuffer) {
 			setTimeout(() => {
 				invaderProjectiles.splice(index, 1)
 			}, 0)
@@ -449,7 +665,8 @@ function animate() {
 							score += 100
 							scoreEl.innerHTML = score
 
-							createParticles({object: invader, fades: true, })
+							createParticles({object: invader, fades: true})
+							//createScoreImg({object: invader, fades: true})
 
 							grid.invaders.splice(i, 1)
 							projectiles.splice(j, 1)
@@ -507,6 +724,44 @@ function animate() {
 animate()
 
 
+// function waitForStart() {
+
+// 	if(game.active === false){
+// 		window.location.href = "title-screen.html"
+
+// 		document.querySelector("#start-button").addEventListener("click", () => {
+// 			game.active = true
+// 			animate()
+// 		}) //end of start button listener
+// 	} else {
+// 		animate()
+// 	}
+// }
+
+
+// function main(){
+
+// 	let infinite = true;
+
+// 	if(game.active === false){
+// 		window.location.href = "title-screen.html"
+// 		console.log("test");
+
+// 		document.querySelector("#start-button").addEventListener("click", () => {
+// 			game.active = true
+// 			// infinite = false
+// 			window.location.href = "game.html"
+// 			animate()
+// 		}) //end of start button listener
+// 	} else {
+// 		animate()
+// 	}
+// }
+
+
+// console.log("Main called");
+// main()
+
 addEventListener('keydown', ({
 	key
 }) => {
@@ -531,6 +786,11 @@ addEventListener('keydown', ({
 			break;
 		case ' ':
 			//console.log("space")
+
+			if(key.keyCode === 32 && game.active === true){
+				preventDefault()
+			}
+			
 			projectiles.push(new Projectile({
 				x: player.position.x + player.width / 2,
 				y: player.position.y
@@ -567,3 +827,23 @@ addEventListener('keyup', ({
 			break;
 	}
 })
+
+
+function startGame() {
+	console.log("start game");
+	resize_canvas()
+	start()
+}
+
+function toggleScreen(id, toggle) {
+	let screen = document.getElementById(id)
+	let display = ( toggle ) ? "block" : "none"
+	screen.style.display = display
+}
+
+function start() {
+	toggleScreen("title-window", false)
+	toggleScreen("game-window", true)
+	game.active = true
+	animate()
+} 

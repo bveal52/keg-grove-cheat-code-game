@@ -4,6 +4,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: darkgrey;
+    overflow: hidden;
 }
 
 #score {
@@ -36,17 +37,24 @@ body {
     color: #fff;
     font: bold 1.5em/1.5em 'Arial';
     text-align: center;
+    /* centered */
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    padding: 200px;
 }
 
 #cheat-code-logo {
-    width: 600px;
+    max-width: 100%;
     height: auto;
+    width: auto\9; /* ie8 */
     /* position: absolute; */
 }
 
 #keg-grove-logo {
-    width: 400px;
+    max-width: 35%;
     height: auto;
+    width: auto\9; /* ie8 */
     position: absolute;
     right: 10px;
     bottom: 10px;
@@ -63,7 +71,60 @@ body {
     font: bold 1em/1em 'Arial';
     color: #000;
     cursor: pointer;
+
+    position: absolute;
+    top: 25%;
+    left: 47%;
 }
+
+@media (max-width: 480px) {
+   #keg-grove-logo {
+       max-width: 50%;
+   }
+
+   #cheat-code-logo {
+       max-width: 75%;
+         position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+   }
+
+   #game-title {
+       padding: 125px;
+       font: bold 1.25em/1.6em 'Arial';
+   }
+
+   #start-button{
+         top: 20%;
+         left: 44%;
+         
+   }
+
+}
+
+@media (max-width: 1024px) {
+   #keg-grove-logo {
+       max-width: 40%;
+   }
+
+   #cheat-code-logo {
+       max-width: 75%;
+       position: absolute;
+       top: 10%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+   }
+
+}
+
+
+/* #gamepad-canvas{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);               
+} */
 
 /* .navbar {
     background-color: #800000;

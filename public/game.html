@@ -8,24 +8,26 @@
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <title>Beer Invaders!</title>
+
 </head>
 
-<body>
-  <!-- <nav class="navbar navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">App Name</a>
-  </nav> -->
-  <!-- <div id="mainPage" class="container page-container">
 
 
-  </div> -->
-
- 
-  <div id="game-window">
-    <p id='score'><span>Score:</span> <span id="scoreEl">0</span></p>
-    <canvas></canvas>
+  <div id="title-window" class="screen" style="display: block">
+      <img id="cheat-code-logo" src="imgs/cheat code.png" alt="Cheat Code Logo">
+      <img id="keg-grove-logo" src="imgs/keg grove.png" alt="Keg Grove Logo">
+      <p id="game-title">Beer Invaders!</p>
+      <button id="start-button" onclick='startGame()'>Start</button>
   </div>
+
+  <div id="game-window" class="screen">
+    <p id='score'><span>Score:</span> <span id="scoreEl">0</span></p>
+    <canvas id='canvas' ></canvas>
+    <canvas id="gamepad-canvas"></canvas>
+  </div>
+
   
-  <gamepad-canvas></gamepad-canvas>
+ 
 
 
   <script src="scripts/jquery.min.js"></script>
@@ -38,6 +40,6 @@
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
   <script src="/__/firebase/init.js"></script> -->
   <script src="scripts/main.js"></script>
-</body>
+
 
 </html>
