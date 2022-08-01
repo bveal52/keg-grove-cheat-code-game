@@ -9,10 +9,19 @@ body {
 
 #score {
     position: absolute;
-    top: 725px;
+    top: 10px;
     left: 10px;
-    color: black;
-    font: bold 1em 'Press Start 2P';
+    color: white;
+    font: bold 0.75em 'Press Start 2P';
+    margin: 0;
+}
+
+#lives {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font: bold 0.75em 'Press Start 2P';
     margin: 0;
 }
 
@@ -201,8 +210,25 @@ body {
 }
 
 
+/* game over window */
 
 
+#game-over-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* opacity: 0.5; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* media queries for different sizes of application uses */
 @media (max-width: 480px) {
     #keg-grove-logo {
         max-width: 50%;
@@ -256,25 +282,3 @@ body {
     }
 
 }
-
-
-/* #gamepad-canvas{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);               
-} */
-
-/* .navbar {
-    background-color: #800000;
-    color: white;
-} */
-
-/* .page-container {
-    margin-top: 75px;
-} */
-
-
-/* canvas {
-    background-color: black;
-} */

@@ -23,21 +23,24 @@
   </div>
 
   <div id="game-window" class="screen">
-    <p id='score'><span>Score:</span> <span id="scoreEl">0</span></p>
+    <p id='score'><span>Score:</span><span id="scoreEl">0</span></p>
+    <p id='lives'><span>Lives:</span><span id="livesEl">3</span></p>
     <canvas id='canvas' ></canvas>
     <!-- <canvas id="gamepad-canvas"></canvas> -->
-      <button id="shoot-button">Shoot</button>
+      <!-- <button id="shoot-button">Shoot</button>
       <button id="left-button">Left</button>
-      <button id="right-button">Right</button>
+      <button id="right-button">Right</button> -->
+
+      <!-- <div class="box">Shoot</div>
+      <div class="box">Left</div>
+      <div class="box">Right</div> -->
   </div>
 
-  <!-- <div id="game-over-window" class="screen">
-    <p id='score'><span>Score:</span> <span id="scoreEl">0</span></p>
-    <canvas id='canvas' ></canvas>
-      <button id="shoot-button">Shoot</button>
-      <button id="left-button">Left</button>
-      <button id="right-button">Right</button>
-  </div> -->
+  <div id="game-over-window" class="screen">
+    <p id="game-over-text">Game Over!</p>
+    <p id='final-score'><span>Final Score</span> <span id="scoreEl">0</span></p>
+      <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
+  </div>
 
  
 
