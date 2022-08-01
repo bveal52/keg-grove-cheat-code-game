@@ -14,9 +14,9 @@ let c = canvas.getContext("2d");
 // canvas.height = 768;
 
 //upper 2/3's of the screen is the game
-canvas.width = window.innerWidth / 1.5;
-canvas.height = window.innerHeight;
-let gameScreenBuffer = window.innerHeight / 1.5;
+canvas.width = window.innerWidth / 1.2;
+canvas.height = window.innerHeight - 100;
+let gameScreenBuffer = window.innerHeight / 1.2;
 console.log(window.innerWidth / 1.5, window.innerHeight);
 console.log(canvas.width, canvas.height);
 
@@ -62,7 +62,7 @@ class Player {
 
 		image.onload = () => {
 
-			const scale = 0.0625
+			const scale = 0.038
 
 
 			this.image = image
@@ -270,7 +270,7 @@ class Invader {
 
 		image.onload = () => {
 
-			const scale = 0.0625
+			const scale = 0.038
 
 
 			this.image = image
@@ -331,18 +331,18 @@ class Grid {
 
 		this.invaders = []
 
-		const columns = Math.floor(Math.random() * 2 + 3)
+		const columns = Math.floor(Math.random() * 2 + 4)
 		const rows = Math.floor(Math.random() * 2 + 2)
 
-		this.width = columns * 50
+		this.width = columns * 30
 
 
 		for (let i = 0; i < columns; i++) {
 			for (let j = 0; j < rows; j++) {
 				this.invaders.push(new Invader({
 					position: {
-						x: i * 50,
-						y: j * 50
+						x: i * 30,
+						y: j * 30
 					}
 				}))
 				//console.log("here");
@@ -391,7 +391,7 @@ const keys = {
 }
 
 let frames = 0
-let randomInterval = Math.floor(Math.random() * 500) + 5000
+let randomInterval = Math.floor(Math.random() * 500) + 1000
 let numEnemies = 0
 let game = {
 	score: 0,
@@ -439,76 +439,78 @@ function createParticles({object, color, fades}) {
 
 }
 
-Button = function(x, y, width, height, color) {
 
-    this.active = false;
-    this.color = color;
-    this.height = height;
-    this.width = width;
-    this.x = x;
-    this.y = y;
+//touch button controls : stack overflow
+// Button = function(x, y, width, height, color) {
 
-  }
+//     this.active = false;
+//     this.color = color;
+//     this.height = height;
+//     this.width = width;
+//     this.x = x;
+//     this.y = y;
 
-  Button.prototype = {
+//   }
 
-    // returns true if the specified point lies within the rectangle:
-    containsPoint:function(x, y) {
+//   Button.prototype = {
 
-      // if the point is outside of the rectangle return false:
-      if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
+//     // returns true if the specified point lies within the rectangle:
+//     containsPoint:function(x, y) {
 
-        return false;
+//       // if the point is outside of the rectangle return false:
+//       if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
 
-      }
+//         return false;
 
-      return true;
+//       }
 
-    }
+//       return true;
 
-  };
+//     }
 
-  controller = {
+//   };
 
-    buttons:[
+//   controller = {
 
-      new Button(100, canvas.height / 1.3, 150, 150, "#f09000"),
-      new Button(500, canvas.height / 1.3, 150, 150, "#0090f0"),
-      new Button(700, canvas.height / 1.3, 150, 150, "#0090f0")
+//     buttons:[
 
-    ],
+//       new Button(100, canvas.height / 1.3, 150, 150, "#f09000"),
+//       new Button(500, canvas.height / 1.3, 150, 150, "#0090f0"),
+//       new Button(700, canvas.height / 1.3, 150, 150, "#0090f0")
 
-    testButtons:function(target_touches) {
+//     ],
 
-      var button, index0, index1, touch;
+//     testButtons:function(target_touches) {
 
-      // loop through all buttons:
-      for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
+//       var button, index0, index1, touch;
 
-        button = this.buttons[index0];
-        button.active = false;
+//       // loop through all buttons:
+//       for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
 
-        // loop through all touch objects:
-        for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
+//         button = this.buttons[index0];
+//         button.active = false;
 
-          touch = target_touches[index1];
+//         // loop through all touch objects:
+//         for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
 
-          // make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
-          if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
+//           touch = target_touches[index1];
 
-            button.active = true;
-            break;// once the button is active, there's no need to check if any other points are inside, so continue
+//           // make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
+//           if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
 
-          }
+//             button.active = true;
+//             break;// once the button is active, there's no need to check if any other points are inside, so continue
 
-        }
+//           }
 
-      }
+//         }
 
-	}
+//       }
+
+// 	}
 
 
-  };
+//   };
 
 // dynamic score functionality?
 
@@ -529,23 +531,25 @@ Button = function(x, y, width, height, color) {
 
 // }
 
-function renderButtons(buttons) {
 
-	var button, index;
+//render touch buttons
+// function renderButtons(buttons) {
 
-	//c.fillStyle = "#202830";
-	//c.fillRect(0, 150, canvas.width, canvas.height);
+// 	var button, index;
 
-	for (index = buttons.length - 1; index > -1; -- index) {
+// 	//c.fillStyle = "#202830";
+// 	//c.fillRect(0, 150, canvas.width, canvas.height);
 
-	  button = buttons[index];
+// 	for (index = buttons.length - 1; index > -1; -- index) {
 
-	  c.fillStyle = button.color;
-	  c.fillRect(button.x, button.y, button.width, button.height);
+// 	  button = buttons[index];
 
-	}
+// 	  c.fillStyle = button.color;
+// 	  c.fillRect(button.x, button.y, button.width, button.height);
 
-  }
+// 	}
+
+//   }
 
 //animation loop for game
 function animate() {
@@ -559,11 +563,11 @@ function animate() {
 	//create canvas background
 	requestAnimationFrame(animate)
 	c.fillStyle = 'black'
-	c.fillRect(0, 0, canvas.width, canvas.height / 1.5)
+	c.fillRect(0, 0, canvas.width, canvas.height / 1.2)
 	c.fillStyle = 'white'
-	c.fillRect(0, canvas.height / 1.5, canvas.width, canvas.height)
+	c.fillRect(0, canvas.height / 1.2, canvas.width, canvas.height - 200)
 
-	renderButtons(controller.buttons)
+	//renderButtons(controller.buttons)
 
 	//create canvas buttons
 
@@ -616,6 +620,7 @@ function animate() {
 
 			console.log("you lose");
 			createParticles({object: player, color: "red", fades: true})
+			game.over = true;
 		}
 
 		//console.log(invaderProjectiles);
@@ -698,11 +703,12 @@ function animate() {
 		player.rotation = 0
 	}
 
-	//only spawn new eme
+	//only spawn new ememies if there are no enemies on the screen
+
 	if (frames % randomInterval === 0) {
 		grids.push(new Grid())
 		frames = 0
-		randomInterval = Math.floor(Math.random() * 500) + 2000
+		randomInterval = Math.floor(Math.random() * 500) + 1000
 		console.log(randomInterval);
 	}
 
@@ -787,10 +793,13 @@ addEventListener('keydown', ({
 		case ' ':
 			//console.log("space")
 
-			if(key.keyCode === 32 && game.active === true){
-				preventDefault()
-			}
-			
+			// if(key.keyCode === 32 && game.active === true){
+			// 	preventDefault()
+			// }
+
+			//possibly add a timer to prevent spamming
+			//possibly auto shoot in future?
+
 			projectiles.push(new Projectile({
 				x: player.position.x + player.width / 2,
 				y: player.position.y

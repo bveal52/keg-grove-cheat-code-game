@@ -9,10 +9,10 @@ body {
 
 #score {
     position: absolute;
-    top: 10px;
+    top: 725px;
     left: 10px;
-    color: #fff;
-    font: bold 1.5em/1.5em 'Arial';
+    color: black;
+    font: bold 1em 'Press Start 2P';
     margin: 0;
 }
 
@@ -35,8 +35,8 @@ body {
 
 #game-title {
     color: #fff;
-    font: bold 1.5em/1.5em 'Arial';
     text-align: center;
+    font-family: 'Sabo';
     /* centered */
     display: flex;
     justify-content: center;
@@ -47,74 +47,213 @@ body {
 #cheat-code-logo {
     max-width: 100%;
     height: auto;
-    width: auto\9; /* ie8 */
+    width: auto\9;
+    /* ie8 */
     /* position: absolute; */
 }
 
 #keg-grove-logo {
     max-width: 35%;
     height: auto;
-    width: auto\9; /* ie8 */
+    width: auto\9;
+    /* ie8 */
     position: absolute;
     right: 10px;
     bottom: 10px;
 }
 
+
 #start-button {
+   
+    font: bold 1em 'Press Start 2P';
+    padding: 5px 10px 5px 10px ;
+    background-color: lightgray;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: gray;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    position: absolute;
+    top: 25%;
+    left: 47%; 
     /* position: absolute; */
     /* bottom: 10px;
     right: 10px; */
-    background-color: #fff;
+    /* background-color: #fff;
     border: 1px solid #fff;
     border-radius: 5px;
     padding: 5px;
     font: bold 1em/1em 'Arial';
     color: #000;
-    cursor: pointer;
-
-    position: absolute;
-    top: 25%;
-    left: 47%;
+    cursor: pointer; */
+    /* text-align: center; */
+	/* display: inline-block; */
+	/* margin:5px; */
 }
 
+#start-button:active {
+    background-color: gray;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+
+
+#canvas {
+    z-index: 1;
+}
+
+#shoot-button {
+    /* display: inline-block; */
+    z-index:2;
+    /* font: bold 1em 'Press Start 2P';
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px #999; */
+    font: bold 1em 'Press Start 2P';
+    padding: 5px 10px 5px 10px ;
+    background-color: green;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: lightgray;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+}
+
+#shoot-button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+#left-button {
+    /* display: inline-block; */
+    z-index: 2;
+    position: absolute;
+    bottom: 50px;
+    left: 160px;
+    /* font: bold 1em 'Press Start 2P';
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: red;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px #999; */
+    font: bold 1em 'Press Start 2P';
+    padding: 5px 10px 5px 10px ;
+    background-color: red;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: lightgray;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+
+}
+
+#left-button:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+#right-button {
+    /* display: inline-block; */
+    z-index:2;
+    position: absolute;
+    bottom: 50px;
+    left: 260px;
+    /* font: bold 1em 'Press Start 2P';
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #gray;
+    background-color: red;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 4px #999; */
+    font: bold 1em 'Press Start 2P';
+    padding: 5px 10px 5px 10px ;
+    background-color: red;
+    text-shadow: -1px -1px black, 1px 1px white;
+    color: lightgray;
+	border-radius: 7px;
+    box-shadow: 0 .2em gray; 
+    cursor: pointer;
+}
+
+#right-button:active {
+    background-color: red;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+
+
+
 @media (max-width: 480px) {
-   #keg-grove-logo {
-       max-width: 50%;
-   }
+    #keg-grove-logo {
+        max-width: 50%;
+    }
 
-   #cheat-code-logo {
-       max-width: 75%;
-         position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-   }
+    #cheat-code-logo {
+        max-width: 75%;
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-   #game-title {
-       padding: 125px;
-       font: bold 1.25em/1.6em 'Arial';
-   }
+    #game-title {
+        font-family: 'Sabo';
+        padding: 125px;
+        
+    }
 
-   #start-button{
-         top: 20%;
-         left: 44%;
-         
-   }
+    #start-button {
+        top: 20%;
+        left: 37%;
 
+    }
+
+}
+
+@media (max-width: 380px) {
+    #game-title {
+        font-family: 'Sabo';
+        padding: 100px;
+    }
+
+    #start-button {
+        top: 20%;
+        left: 44%;
+    }
 }
 
 @media (max-width: 1024px) {
-   #keg-grove-logo {
-       max-width: 40%;
-   }
+    #keg-grove-logo {
+        max-width: 40%;
+    }
 
-   #cheat-code-logo {
-       max-width: 75%;
-       position: absolute;
-       top: 10%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-   }
+    #cheat-code-logo {
+        max-width: 75%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
 }
 
