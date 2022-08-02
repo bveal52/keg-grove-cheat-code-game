@@ -63,11 +63,11 @@ class Player {
 
 
 		const image = new Image()
-		image.src = './imgs/beer_guy.png'
+		image.src = './imgs/spaceship.png'
 
 		image.onload = () => {
 
-			const scale = 0.038
+			const scale = .1
 
 
 			this.image = image
@@ -271,11 +271,11 @@ class Invader {
 		//this.rotation = 0
 
 		const image = new Image()
-		image.src = './imgs/beer_mug.png'
+		image.src = './imgs/invader.png'
 
 		image.onload = () => {
 
-			const scale = 0.038
+			const scale = 1
 
 
 			this.image = image
@@ -505,7 +505,7 @@ const keys = {
 }
 
 let frames = 0
-let randomInterval = Math.floor(Math.random() * 500) + 1000
+let randomInterval = Math.floor(Math.random() * 500) + 800
 let numEnemies = 0
 let game = {
 	score: 0,
@@ -768,7 +768,7 @@ function animate() {
 
 	//only spawn new ememies if there are no enemies on the screen
 
-	if (frames % randomInterval === 0) {
+	if (frames % randomInterval === 0 || grids.length === 0) {
 		grids.push(new Grid())
 		frames = 0
 		randomInterval = Math.floor(Math.random() * 500) + 800
