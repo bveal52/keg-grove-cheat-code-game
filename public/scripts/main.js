@@ -14,194 +14,196 @@ const rightButton = document.querySelector("#right-button")
 
 
 
-	var Button, controller, display;
+	// var Button, controller, display;
   
-	// basically a rectangle, but it's purpose here is to be a button:
-	Button = function(x, y, width, height, color) {
+	// // basically a rectangle, but it's purpose here is to be a button:
+	// Button = function(x, y, width, height, color) {
   
-	  this.active = false;
-	  this.color = color;
-	  this.height = height;
-	  this.width = width;
-	  this.x = x;
-	  this.y = y;
+	//   this.active = false;
+	//   this.color = color;
+	//   this.height = height;
+	//   this.width = width;
+	//   this.x = x;
+	//   this.y = y;
   
-	}
+	// }
   
-	Button.prototype = {
+	// Button.prototype = {
   
-	  // returns true if the specified point lies within the rectangle:
-	  containsPoint:function(x, y) {
+	//   // returns true if the specified point lies within the rectangle:
+	//   containsPoint:function(x, y) {
   
-		// if the point is outside of the rectangle return false:
-		if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
+	// 	// if the point is outside of the rectangle return false:
+	// 	if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
   
-		  return false;
+	// 	  return false;
   
-		}
+	// 	}
   
-		return true;
+	// 	return true;
   
-	  }
+	//   }
   
-	};
+	// };
   
-	// handles everything to do with user input:
-	controller = {
+	// // handles everything to do with user input:
+	// controller = {
   
-	  buttons:[
+	//   buttons:[
   
-		new Button(20, 750, 60, 60, "#f09000"),
-		// new Button(220, 750, 60, 60, "blue"),
-		// new Button(300, 750, 60, 60, "red")
+	// 	new Button(20, 750, 60, 60, "#f09000"),
+	// 	new Button(220, 750, 60, 60, "blue"),
+	// 	new Button(300, 750, 60, 60, "red")
   
-	  ],
+	//   ],
   
-	  testButtons:function(target_touches) {
+	//   testButtons:function(target_touches) {
   
-		var button, index0, index1, touch;
+	// 	var button, index0, index1, touch;
   
-		// loop through all buttons:
-		for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
+	// 	// loop through all buttons:
+	// 	for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
   
-		  button = this.buttons[index0];
-		  button.active = false;
+	// 	  button = this.buttons[index0];
+	// 	  button.active = false;
   
-		  // loop through all touch objects:
-		  for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
+	// 	  // loop through all touch objects:
+	// 	  for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
   
-			touch = target_touches[index1];
+	// 		touch = target_touches[index1];
   
-			// make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
-			if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
+	// 		// make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
+	// 		if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
+	// 			console.log(touch.clientX, touch.clientY);
+	// 			console.log(display.bounding_rectangle.left, display.bounding_rectangle.top);
   
-			  button.active = true;
-			  break;// once the button is active, there's no need to check if any other points are inside, so continue
+	// 		  button.active = true;
+	// 		  break;// once the button is active, there's no need to check if any other points are inside, so continue
   
-			}
+	// 		}
   
-		  }
+	// 	  }
   
-		}
+	// 	}
 
-		if (this.buttons[0].active) {
+	// 	if (this.buttons[0].active) {
   
-		  //display.message.innerHTML += "jump ";
-		  console.log("shoot");
+	// 	  //display.message.innerHTML += "jump ";
+	// 	  console.log("shoot");
 
-		  //put a timer on shooting to prevent rapid fire
-		  if(cooldown === false && projectiles.length< 10){
-			projectiles.push(new Projectile({
-				x: player.position.x + player.width / 2,
-				y: player.position.y
-			}, {
-				x: 0,
-				y: -15
-			}))
-			console.log(projectiles)
-			cooldown = true
-			setTimeout(() => cooldown = false, 200);
-			}
+	// 	  //put a timer on shooting to prevent rapid fire
+	// 	  if(cooldown === false && projectiles.length< 10){
+	// 		projectiles.push(new Projectile({
+	// 			x: player.position.x + player.width / 2,
+	// 			y: player.position.y
+	// 		}, {
+	// 			x: 0,
+	// 			y: -15
+	// 		}))
+	// 		console.log(projectiles)
+	// 		cooldown = true
+	// 		setTimeout(() => cooldown = false, 200);
+	// 		}
   
-		}
+	// 	}
   
-		// if (this.buttons[1].active) {
+	// 	if (this.buttons[1].active) {
   
-		//   //display.message.innerHTML += "left ";
-		//   console.log("left");
+	// 	  //display.message.innerHTML += "left ";
+	// 	  console.log("left");
   
-		// }
+	// 	}
   
-		// if (this.buttons[2].active) {
+	// 	if (this.buttons[2].active) {
   
-		//   //display.message.innerHTML += "right ";
-		//   console.log("right");
+	// 	  //display.message.innerHTML += "right ";
+	// 	  console.log("right");
   
-		// }
+	// 	}
   
-		//display.message.innerHTML += "-";
+	// 	//display.message.innerHTML += "-";
   
-	  },
+	//   },
   
-	  touchEnd:function(event) {
+	//   touchEnd:function(event) {
   
-		event.preventDefault();
-		controller.testButtons(event.targetTouches);
+	// 	event.preventDefault();
+	// 	controller.testButtons(event.targetTouches);
   
-	  },
+	//   },
   
-	  touchMove:function(event) {
+	//   touchMove:function(event) {
   
-		event.preventDefault();
-		controller.testButtons(event.targetTouches);
+	// 	event.preventDefault();
+	// 	controller.testButtons(event.targetTouches);
   
-	  },
+	//   },
   
-	  touchStart:function(event) {
+	//   touchStart:function(event) {
   
-		event.preventDefault();
-		controller.testButtons(event.targetTouches);
+	// 	event.preventDefault();
+	// 	controller.testButtons(event.targetTouches);
   
-	  }
+	//   }
   
-	};
+	// };
   
-	// handles everything to do with displaying graphics on the screen:
-	display = {
+	// // handles everything to do with displaying graphics on the screen:
+	// display = {
   
-	  // the ratio in size between the buffer and output canvases used to scale user input coordinates:
-	  buffer_output_ratio:1,
-	  // the bounding rectangle of the output canvas used to determine the location of user input on the output canvas:
-	  bounding_rectangle: {
-		left:0,
-		top:350,
-	  },
+	//   // the ratio in size between the buffer and output canvases used to scale user input coordinates:
+	//   buffer_output_ratio:1,
+	//   // the bounding rectangle of the output canvas used to determine the location of user input on the output canvas:
+	//   bounding_rectangle: {
+	// 	top:350,
+	// 	left:0,
+	//   },
   
-	  // clears the display canvas to the specified color:
-	  clear:function(color) {
+	//   // clears the display canvas to the specified color:
+	//   clear:function(color) {
   
-		c.fillStyle = color || "#000000";
-		c.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
+	// 	c.fillStyle = color || "#000000";
+	// 	c.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
   
-	  },
+	//   },
   
-	  // renders the buffer to the output canvas:
-	  render:function() {
+	//   // renders the buffer to the output canvas:
+	//   render:function() {
   
-		c.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.output.canvas.width, this.output.canvas.height);
+	// 	c.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.output.canvas.width, this.output.canvas.height);
   
-	  },
+	//   },
   
-	  // renders the buttons:
-	  renderButtons:function(buttons) {
+	//   // renders the buttons:
+	//   renderButtons:function(buttons) {
   
-		var button, index;
+	// 	var button, index;
   
-		// c.fillStyle = "#202830";
-		// c.fillRect(0, 150, canvas.width, canvas.height);
+	// 	// c.fillStyle = "#202830";
+	// 	// c.fillRect(0, 150, canvas.width, canvas.height);
   
-		for (index = buttons.length - 1; index > -1; -- index) {
+	// 	for (index = buttons.length - 1; index > -1; -- index) {
   
-		  button = buttons[index];
+	// 	  button = buttons[index];
   
-		  c.fillStyle = button.color;
-		  c.fillRect(button.x, button.y, button.width, button.height);
+	// 	  c.fillStyle = button.color;
+	// 	  c.fillRect(button.x, button.y, button.width, button.height);
   
-		}
+	// 	}
   
-	  },
+	//   },
   
-	  // renders a square:
-	  renderSquare:function(square) {
+	//   // renders a square:
+	//   renderSquare:function(square) {
   
-		c.fillStyle = square.color;
-		c.fillRect(square.x, square.y, square.width, square.height);
+	// 	c.fillStyle = square.color;
+	// 	c.fillRect(square.x, square.y, square.width, square.height);
   
-	  },
+	//   },
   
-	  // just keeps the output canvas element sized appropriately:
+	//   // just keeps the output canvas element sized appropriately:
   
-	};
+	// };
 
 
 //const gamepadCanvas = document.querySelector("#gamepad-canvas")
@@ -565,6 +567,96 @@ class Grid {
 	}
 }
 
+//joystick controls
+
+class JoystickController
+{
+  constructor( stickID, maxDistance, deadzone )
+  {
+    this.id = stickID;
+    let stick = document.getElementById(stickID);
+    // location from which drag begins, used to calculate offsets
+    this.dragStart = null;
+    // track touch identifier in case multiple joysticks present
+    this.touchId = null;
+    
+    this.active = false;
+    this.value = { x: 0, y: 0 }; 
+    let self = this;
+    function handleDown(event)
+    {
+        self.active = true;
+      // all drag movements are instantaneous
+      stick.style.transition = '0s';
+      // touch event fired before mouse event; prevent redundant mouse event from firing
+      event.preventDefault();
+        if (event.changedTouches)
+          self.dragStart = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
+        else
+          self.dragStart = { x: event.clientX, y: event.clientY };
+      // if this is a touch event, keep track of which one
+        if (event.changedTouches)
+          self.touchId = event.changedTouches[0].identifier;
+    }
+    
+    function handleMove(event) 
+    {
+        if ( !self.active ) return;
+        // if this is a touch event, make sure it is the right one
+        // also handle multiple simultaneous touchmove events
+        let touchmoveId = null;
+        if (event.changedTouches)
+        {
+          for (let i = 0; i < event.changedTouches.length; i++)
+          {
+            if (self.touchId == event.changedTouches[i].identifier)
+            {
+              touchmoveId = i;
+              event.clientX = event.changedTouches[i].clientX;
+              event.clientY = event.changedTouches[i].clientY;
+            }
+          }
+          if (touchmoveId == null) return;
+        }
+        const xDiff = event.clientX - self.dragStart.x;
+        const yDiff = event.clientY - self.dragStart.y;
+        const angle = Math.atan2(yDiff, xDiff);
+      const distance = Math.min(maxDistance, Math.hypot(xDiff, yDiff));
+      const xPosition = distance * Math.cos(angle);
+      const yPosition = distance * Math.sin(angle);
+      // move stick image to new position
+        stick.style.transform = `translate3d(${xPosition}px, ${yPosition}px, 0px)`;
+      // deadzone adjustment
+      const distance2 = (distance < deadzone) ? 0 : maxDistance / (maxDistance - deadzone) * (distance - deadzone);
+        const xPosition2 = distance2 * Math.cos(angle);
+      const yPosition2 = distance2 * Math.sin(angle);
+        const xPercent = parseFloat((xPosition2 / maxDistance).toFixed(4));
+        const yPercent = parseFloat((yPosition2 / maxDistance).toFixed(4));
+        
+        self.value = { x: xPercent, y: yPercent };
+      }
+    function handleUp(event) 
+    {
+        if ( !self.active ) return;
+        // if this is a touch event, make sure it is the right one
+        if (event.changedTouches && self.touchId != event.changedTouches[0].identifier) return;
+        // transition the joystick position back to center
+        stick.style.transition = '.2s';
+        stick.style.transform = `translate3d(0px, 0px, 0px)`;
+        // reset everything
+        self.value = { x: 0, y: 0 };
+        self.touchId = null;
+        self.active = false;
+    }
+    stick.addEventListener('mousedown', handleDown);
+    stick.addEventListener('touchstart', handleDown);
+    document.addEventListener('mousemove', handleMove, {passive: false});
+    document.addEventListener('touchmove', handleMove, {passive: false});
+    document.addEventListener('mouseup', handleUp);
+    document.addEventListener('touchend', handleUp);
+  }
+}
+
 const player = new Player()
 const projectiles = []
 const grids = []
@@ -605,8 +697,19 @@ let game = {
 	active: false
 }
 let score = 0
+let myStick = new JoystickController("stick", 64, 8);
 
+//update joystick
+function updateJoystick(){
+	//document.getElementById("status").innerText = "Joystick1: " + JSON.stringify(joystick1.value);
+	if(myStick.value.x > 0.1 && player.position.x < canvas.width - player.width){
+		playerRight()
+	}
+	else if(myStick.value.x < -0.1 && player.position.x > 0){	
+		playerLeft()
+	}
 
+}
 //create background particles
 for (let i = 0; i < 100; i++) {
 	particles.push(new Particle({
@@ -676,8 +779,12 @@ function animate() {
 	c.fillStyle = 'white'
 	c.fillRect(0, canvas.height / 1.2, canvas.width, canvas.height - 200)
 
-	display.renderButtons(controller.buttons)
-	controller.testButtons(ongoingTouches);
+	updateJoystick()
+
+
+
+	//display.renderButtons(controller.buttons)
+	//controller.testButtons(ongoingTouches);
 
 	//create canvas buttons
 
@@ -925,7 +1032,7 @@ addEventListener('keydown', ({
 			}))
 			console.log(projectiles)
 			cooldown = true
-			setTimeout(() => cooldown = false, 300);
+			setTimeout(() => cooldown = false, 150);
 			}
 			
 			break;
@@ -960,16 +1067,18 @@ addEventListener('keyup', ({
 
 //on screen button listeners
 
-// document.querySelector("#shoot-button").addEventListener("click", () => {
-// 	projectiles.push(new Projectile({
-// 		x: player.position.x + player.width / 2,
-// 		y: player.position.y
-// 	}, {
-// 		x: 0,
-// 		y: -15
-// 	}))
-// 	console.log(projectiles)
-// })
+document.querySelector("#shoot-button").addEventListener("click", () => {
+	projectiles.push(new Projectile({
+		x: player.position.x + player.width / 2,
+		y: player.position.y
+	}, {
+		x: 0,
+		y: -15
+	}))
+	console.log(projectiles)
+})
+
+
 
 
 
@@ -1031,130 +1140,4 @@ function start() {
 	}
 }
 
-// adding touch event listeners for mobile
-function startup() {
-	const el = document.getElementById('canvas');
-	el.addEventListener('touchstart', handleStart);
-	el.addEventListener('touchend', handleEnd);
-	el.addEventListener('touchcancel', handleCancel);
-	el.addEventListener('touchmove', handleMove);
-	console.log('Initialized.');
-  }
-  
-  //initialize helper functions on startup
-  document.addEventListener("DOMContentLoaded", startup);
 
-
-  function handleStart(evt) {
-	evt.preventDefault();
-	console.log('touchstart.');
-	const el = document.getElementById('canvas');
-	const ctx = el.getContext('2d');
-	const touches = evt.changedTouches;
-  
-	for (let i = 0; i < touches.length; i++) {
-	  console.log(`touchstart: ${i}.`);
-	  ongoingTouches.push(copyTouch(touches[i]));
-	  const color = colorForTouch(touches[i]);
-	  console.log(`color of touch with id ${touches[i].identifier} = ${color}`);
-	  ctx.beginPath();
-	  ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);  // a circle at the start
-	  ctx.fillStyle = color;
-	  ctx.fill();
-	}
-  }
-
-  function handleMove(evt) {
-	evt.preventDefault();
-	const el = document.getElementById('canvas');
-	const ctx = el.getContext('2d');
-	const touches = evt.changedTouches;
-  
-	for (let i = 0; i < touches.length; i++) {
-	  const color = colorForTouch(touches[i]);
-	  const idx = ongoingTouchIndexById(touches[i].identifier);
-  
-	  if (idx >= 0) {
-		console.log(`continuing touch ${idx}`);
-		ctx.beginPath();
-		console.log(`ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`);
-		ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-		console.log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
-		ctx.lineTo(touches[i].pageX, touches[i].pageY);
-		ctx.lineWidth = 4;
-		ctx.strokeStyle = color;
-		ctx.stroke();
-  
-		ongoingTouches.splice(idx, 1, copyTouch(touches[i]));  // swap in the new touch record
-	  } else {
-		console.log('can\'t figure out which touch to continue');
-	  }
-	}
-  }
-
-  function handleEnd(evt) {
-	evt.preventDefault();
-	console.log("touchend");
-	const el = document.getElementById('canvas');
-	const ctx = el.getContext('2d');
-	const touches = evt.changedTouches;
-  
-	for (let i = 0; i < touches.length; i++) {
-	  const color = colorForTouch(touches[i]);
-	  let idx = ongoingTouchIndexById(touches[i].identifier);
-  
-	  if (idx >= 0) {
-		ctx.lineWidth = 4;
-		ctx.fillStyle = color;
-		ctx.beginPath();
-		ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-		ctx.lineTo(touches[i].pageX, touches[i].pageY);
-		ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8);  // and a square at the end
-		ongoingTouches.splice(idx, 1);  // remove it; we're done
-	  } else {
-		console.log('can\'t figure out which touch to end');
-	  }
-	}
-  }
-
- function handleCancel(evt) {
-	evt.preventDefault();
-	console.log('touchcancel.');
-	const touches = evt.changedTouches;
-  
-	for (let i = 0; i < touches.length; i++) {
-	  let idx = ongoingTouchIndexById(touches[i].identifier);
-	  ongoingTouches.splice(idx, 1);  // remove it; we're done
-	}
-  }
-
-  function colorForTouch(touch) {
-	let r = touch.identifier % 16;
-	let g = Math.floor(touch.identifier / 3) % 16;
-	let b = Math.floor(touch.identifier / 7) % 16;
-	r = r.toString(16); // make it a hex digit
-	g = g.toString(16); // make it a hex digit
-	b = b.toString(16); // make it a hex digit
-	const color = `#${r}${g}${b}`;
-	return color;
-  }
-
-  function copyTouch({ identifier, pageX, pageY }) {
-	return { identifier, pageX, pageY };
-  }
-
-  function ongoingTouchIndexById(idToFind) {
-	for (let i = 0; i < ongoingTouches.length; i++) {
-	  const id = ongoingTouches[i].identifier;
-  
-	  if (id == idToFind) {
-		return i;
-	  }
-	}
-	return -1;    // not found
-  }
-
-//   function log(msg) {
-// 	const container = document.getElementById('log');
-// 	container.textContent = `${msg} \n${container.textContent}`;
-//   }

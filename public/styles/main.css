@@ -112,19 +112,23 @@ body {
     z-index: 1;
 }
 
+#joystick-base{
+    position: absolute;
+    bottom: 40px;
+    left: 18px;
+}
+
+
+#stick{
+    position: absolute; 
+    left: 40px; 
+    bottom: 63px; 
+    transition: all 0.2s ease 0s; 
+    transform: translate3d(0px, 0px, 0px);
+}
+
 #shoot-button {
-    /* display: inline-block; */
     z-index:2;
-    /* font: bold 1em 'Press Start 2P';
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 4px #999; */
     font: bold 1em 'Press Start 2P';
     padding: 5px 10px 5px 10px ;
     background-color: green;
@@ -135,7 +139,7 @@ body {
     cursor: pointer;
     position: absolute;
     bottom: 50px;
-    left: 10px;
+    left: 250px;
 }
 
 #shoot-button:active {
@@ -150,16 +154,6 @@ body {
     position: absolute;
     bottom: 50px;
     left: 160px;
-    /* font: bold 1em 'Press Start 2P';
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: red;
-    border: none;
-    border-radius: 20px;
-    box-shadow: 0 4px #999; */
     font: bold 1em 'Press Start 2P';
     padding: 5px 10px 5px 10px ;
     background-color: red;

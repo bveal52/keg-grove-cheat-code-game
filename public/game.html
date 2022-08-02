@@ -25,11 +25,22 @@
   <div id="game-window" class="screen">
     <p id='score'><span>Score:</span><span id="scoreEl">0</span></p>
     <p id='lives'><span>Lives:</span><span id="livesEl">3</span></p>
+    <!-- <p id="scores">
+      Joystick
+    </p> -->
     <canvas id='canvas' ></canvas>
     <!-- <canvas id="gamepad-canvas"></canvas> -->
-      <!-- <button id="shoot-button">Shoot</button>
-      <button id="left-button">Left</button>
+      <button id="shoot-button">Shoot</button>
+      <!-- <button id="left-button">Left</button>
       <button id="right-button">Right</button> -->
+
+      <div style="width: 64px">
+        <img id="joystick-base" src="imgs/joystick-base.png"/>
+        <div id="stick">
+          <img src="imgs/joystick-red.png">
+        </div>
+      </div>
+      
 
       <!-- <div class="box">Shoot</div>
       <div class="box">Left</div>
@@ -49,11 +60,11 @@
   <script src="scripts/popper.js"></script>
   <script src="scripts/bootstrap-material-design.js"></script>
   <script>$("body").bootstrapMaterialDesign();</script>
-  <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
   <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-  <script src="/__/firebase/init.js"></script> -->
+  <script src="/__/firebase/init.js"></script>
   <script src="scripts/main.js"></script>
 
 
