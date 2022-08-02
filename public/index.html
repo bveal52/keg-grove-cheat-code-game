@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
@@ -19,6 +20,15 @@
       <img id="cheat-code-logo" src="imgs/cheat code.png" alt="Cheat Code Logo">
       <img id="keg-grove-logo" src="imgs/keg grove.png" alt="Keg Grove Logo">
       <p id="game-title">Beer Invaders!</p>
+      <p id="game-title-background-1">Beer Invaders!</p>
+      <p id="game-title-background-2">Beer Invaders!</p>
+
+      <p id="stars"></p>
+      <p id="stars2"></p>
+      <p id="stars3"></p>
+      <p id="title"></p>
+      
+      <!-- <canvas id="canvas"></canvas> -->
       <button id="start-button" onclick='startGame()'>START</button>
   </div>
 
@@ -30,13 +40,17 @@
     </p> -->
     <canvas id='canvas' ></canvas>
     <!-- <canvas id="gamepad-canvas"></canvas> -->
-      <button id="shoot-button">Shoot</button>
+      <!-- <button id="shoot-button">Shoot</button> -->
       <!-- <button id="left-button">Left</button>
       <button id="right-button">Right</button> -->
 
       <div style="width: 64px">
         <img id="joystick-base" src="imgs/joystick-base.png"/>
         <div id="stick">
+          <img src="imgs/joystick-red.png">
+        </div>
+
+        <div id="stickButton">
           <img src="imgs/joystick-red.png">
         </div>
       </div>
@@ -49,7 +63,7 @@
 
   <div id="game-over-window" class="screen">
     <p id="game-over-text">Game Over!</p>
-    <p id='final-score'><span>Final Score</span> <span id="scoreEl">0</span></p>
+    <p id='final-score'><span>Final Score:</span><span id="finalscoreEl"></span></p>
       <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
   </div>
 

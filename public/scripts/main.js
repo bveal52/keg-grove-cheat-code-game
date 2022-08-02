@@ -10,201 +10,6 @@ const livesEl = document.querySelector("#livesEl");
 const leftButton = document.querySelector("#left-button")
 const rightButton = document.querySelector("#right-button")
 
-// 
-
-
-
-	// var Button, controller, display;
-  
-	// // basically a rectangle, but it's purpose here is to be a button:
-	// Button = function(x, y, width, height, color) {
-  
-	//   this.active = false;
-	//   this.color = color;
-	//   this.height = height;
-	//   this.width = width;
-	//   this.x = x;
-	//   this.y = y;
-  
-	// }
-  
-	// Button.prototype = {
-  
-	//   // returns true if the specified point lies within the rectangle:
-	//   containsPoint:function(x, y) {
-  
-	// 	// if the point is outside of the rectangle return false:
-	// 	if (x < this.x || x > this.x + this.width || y < this.y || y > this.y + this.width) {
-  
-	// 	  return false;
-  
-	// 	}
-  
-	// 	return true;
-  
-	//   }
-  
-	// };
-  
-	// // handles everything to do with user input:
-	// controller = {
-  
-	//   buttons:[
-  
-	// 	new Button(20, 750, 60, 60, "#f09000"),
-	// 	new Button(220, 750, 60, 60, "blue"),
-	// 	new Button(300, 750, 60, 60, "red")
-  
-	//   ],
-  
-	//   testButtons:function(target_touches) {
-  
-	// 	var button, index0, index1, touch;
-  
-	// 	// loop through all buttons:
-	// 	for (index0 = this.buttons.length - 1; index0 > -1; -- index0) {
-  
-	// 	  button = this.buttons[index0];
-	// 	  button.active = false;
-  
-	// 	  // loop through all touch objects:
-	// 	  for (index1 = target_touches.length - 1; index1 > -1; -- index1) {
-  
-	// 		touch = target_touches[index1];
-  
-	// 		// make sure the touch coordinates are adjusted for both the canvas offset and the scale ratio of the buffer and output canvases:
-	// 		if (button.containsPoint((touch.clientX - display.bounding_rectangle.left) * display.buffer_output_ratio, (touch.clientY - display.bounding_rectangle.top) * display.buffer_output_ratio)) {
-	// 			console.log(touch.clientX, touch.clientY);
-	// 			console.log(display.bounding_rectangle.left, display.bounding_rectangle.top);
-  
-	// 		  button.active = true;
-	// 		  break;// once the button is active, there's no need to check if any other points are inside, so continue
-  
-	// 		}
-  
-	// 	  }
-  
-	// 	}
-
-	// 	if (this.buttons[0].active) {
-  
-	// 	  //display.message.innerHTML += "jump ";
-	// 	  console.log("shoot");
-
-	// 	  //put a timer on shooting to prevent rapid fire
-	// 	  if(cooldown === false && projectiles.length< 10){
-	// 		projectiles.push(new Projectile({
-	// 			x: player.position.x + player.width / 2,
-	// 			y: player.position.y
-	// 		}, {
-	// 			x: 0,
-	// 			y: -15
-	// 		}))
-	// 		console.log(projectiles)
-	// 		cooldown = true
-	// 		setTimeout(() => cooldown = false, 200);
-	// 		}
-  
-	// 	}
-  
-	// 	if (this.buttons[1].active) {
-  
-	// 	  //display.message.innerHTML += "left ";
-	// 	  console.log("left");
-  
-	// 	}
-  
-	// 	if (this.buttons[2].active) {
-  
-	// 	  //display.message.innerHTML += "right ";
-	// 	  console.log("right");
-  
-	// 	}
-  
-	// 	//display.message.innerHTML += "-";
-  
-	//   },
-  
-	//   touchEnd:function(event) {
-  
-	// 	event.preventDefault();
-	// 	controller.testButtons(event.targetTouches);
-  
-	//   },
-  
-	//   touchMove:function(event) {
-  
-	// 	event.preventDefault();
-	// 	controller.testButtons(event.targetTouches);
-  
-	//   },
-  
-	//   touchStart:function(event) {
-  
-	// 	event.preventDefault();
-	// 	controller.testButtons(event.targetTouches);
-  
-	//   }
-  
-	// };
-  
-	// // handles everything to do with displaying graphics on the screen:
-	// display = {
-  
-	//   // the ratio in size between the buffer and output canvases used to scale user input coordinates:
-	//   buffer_output_ratio:1,
-	//   // the bounding rectangle of the output canvas used to determine the location of user input on the output canvas:
-	//   bounding_rectangle: {
-	// 	top:350,
-	// 	left:0,
-	//   },
-  
-	//   // clears the display canvas to the specified color:
-	//   clear:function(color) {
-  
-	// 	c.fillStyle = color || "#000000";
-	// 	c.fillRect(0, 0, this.buffer.canvas.width, this.buffer.canvas.height);
-  
-	//   },
-  
-	//   // renders the buffer to the output canvas:
-	//   render:function() {
-  
-	// 	c.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.output.canvas.width, this.output.canvas.height);
-  
-	//   },
-  
-	//   // renders the buttons:
-	//   renderButtons:function(buttons) {
-  
-	// 	var button, index;
-  
-	// 	// c.fillStyle = "#202830";
-	// 	// c.fillRect(0, 150, canvas.width, canvas.height);
-  
-	// 	for (index = buttons.length - 1; index > -1; -- index) {
-  
-	// 	  button = buttons[index];
-  
-	// 	  c.fillStyle = button.color;
-	// 	  c.fillRect(button.x, button.y, button.width, button.height);
-  
-	// 	}
-  
-	//   },
-  
-	//   // renders a square:
-	//   renderSquare:function(square) {
-  
-	// 	c.fillStyle = square.color;
-	// 	c.fillRect(square.x, square.y, square.width, square.height);
-  
-	//   },
-  
-	//   // just keeps the output canvas element sized appropriately:
-  
-	// };
-
 
 //const gamepadCanvas = document.querySelector("#gamepad-canvas")
 let c = canvas.getContext("2d");
@@ -569,92 +374,105 @@ class Grid {
 
 //joystick controls
 
-class JoystickController
-{
-  constructor( stickID, maxDistance, deadzone )
-  {
-    this.id = stickID;
-    let stick = document.getElementById(stickID);
-    // location from which drag begins, used to calculate offsets
-    this.dragStart = null;
-    // track touch identifier in case multiple joysticks present
-    this.touchId = null;
-    
-    this.active = false;
-    this.value = { x: 0, y: 0 }; 
-    let self = this;
-    function handleDown(event)
-    {
-        self.active = true;
-      // all drag movements are instantaneous
-      stick.style.transition = '0s';
-      // touch event fired before mouse event; prevent redundant mouse event from firing
-      event.preventDefault();
-        if (event.changedTouches)
-          self.dragStart = { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY };
-        else
-          self.dragStart = { x: event.clientX, y: event.clientY };
-      // if this is a touch event, keep track of which one
-        if (event.changedTouches)
-          self.touchId = event.changedTouches[0].identifier;
-    }
-    
-    function handleMove(event) 
-    {
-        if ( !self.active ) return;
-        // if this is a touch event, make sure it is the right one
-        // also handle multiple simultaneous touchmove events
-        let touchmoveId = null;
-        if (event.changedTouches)
-        {
-          for (let i = 0; i < event.changedTouches.length; i++)
-          {
-            if (self.touchId == event.changedTouches[i].identifier)
-            {
-              touchmoveId = i;
-              event.clientX = event.changedTouches[i].clientX;
-              event.clientY = event.changedTouches[i].clientY;
-            }
-          }
-          if (touchmoveId == null) return;
-        }
-        const xDiff = event.clientX - self.dragStart.x;
-        const yDiff = event.clientY - self.dragStart.y;
-        const angle = Math.atan2(yDiff, xDiff);
-      const distance = Math.min(maxDistance, Math.hypot(xDiff, yDiff));
-      const xPosition = distance * Math.cos(angle);
-      const yPosition = distance * Math.sin(angle);
-      // move stick image to new position
-        stick.style.transform = `translate3d(${xPosition}px, ${yPosition}px, 0px)`;
-      // deadzone adjustment
-      const distance2 = (distance < deadzone) ? 0 : maxDistance / (maxDistance - deadzone) * (distance - deadzone);
-        const xPosition2 = distance2 * Math.cos(angle);
-      const yPosition2 = distance2 * Math.sin(angle);
-        const xPercent = parseFloat((xPosition2 / maxDistance).toFixed(4));
-        const yPercent = parseFloat((yPosition2 / maxDistance).toFixed(4));
-        
-        self.value = { x: xPercent, y: yPercent };
-      }
-    function handleUp(event) 
-    {
-        if ( !self.active ) return;
-        // if this is a touch event, make sure it is the right one
-        if (event.changedTouches && self.touchId != event.changedTouches[0].identifier) return;
-        // transition the joystick position back to center
-        stick.style.transition = '.2s';
-        stick.style.transform = `translate3d(0px, 0px, 0px)`;
-        // reset everything
-        self.value = { x: 0, y: 0 };
-        self.touchId = null;
-        self.active = false;
-    }
-    stick.addEventListener('mousedown', handleDown);
-    stick.addEventListener('touchstart', handleDown);
-    document.addEventListener('mousemove', handleMove, {passive: false});
-    document.addEventListener('touchmove', handleMove, {passive: false});
-    document.addEventListener('mouseup', handleUp);
-    document.addEventListener('touchend', handleUp);
-  }
+class JoystickController {
+	constructor(stickID, maxDistance, deadzone) {
+		this.id = stickID;
+		let stick = document.getElementById(stickID);
+		// location from which drag begins, used to calculate offsets
+		this.dragStart = null;
+		// track touch identifier in case multiple joysticks present
+		this.touchId = null;
+
+		this.active = false;
+		this.value = {
+			x: 0,
+			y: 0
+		};
+		let self = this;
+
+		function handleDown(event) {
+			self.active = true;
+			// all drag movements are instantaneous
+			stick.style.transition = '0s';
+			// touch event fired before mouse event; prevent redundant mouse event from firing
+			event.preventDefault();
+			if (event.changedTouches)
+				self.dragStart = {
+					x: event.changedTouches[0].clientX,
+					y: event.changedTouches[0].clientY
+				};
+			else
+				self.dragStart = {
+					x: event.clientX,
+					y: event.clientY
+				};
+			// if this is a touch event, keep track of which one
+			if (event.changedTouches)
+				self.touchId = event.changedTouches[0].identifier;
+		}
+
+		function handleMove(event) {
+			if (!self.active) return;
+			// if this is a touch event, make sure it is the right one
+			// also handle multiple simultaneous touchmove events
+			let touchmoveId = null;
+			if (event.changedTouches) {
+				for (let i = 0; i < event.changedTouches.length; i++) {
+					if (self.touchId == event.changedTouches[i].identifier) {
+						touchmoveId = i;
+						event.clientX = event.changedTouches[i].clientX;
+						event.clientY = event.changedTouches[i].clientY;
+					}
+				}
+				if (touchmoveId == null) return;
+			}
+			const xDiff = event.clientX - self.dragStart.x;
+			const yDiff = event.clientY - self.dragStart.y;
+			const angle = Math.atan2(yDiff, xDiff);
+			const distance = Math.min(maxDistance, Math.hypot(xDiff, yDiff));
+			const xPosition = distance * Math.cos(angle);
+			const yPosition = distance * Math.sin(angle);
+			// move stick image to new position
+			stick.style.transform = `translate3d(${xPosition}px, ${yPosition}px, 0px)`;
+			// deadzone adjustment
+			const distance2 = (distance < deadzone) ? 0 : maxDistance / (maxDistance - deadzone) * (distance - deadzone);
+			const xPosition2 = distance2 * Math.cos(angle);
+			const yPosition2 = distance2 * Math.sin(angle);
+			const xPercent = parseFloat((xPosition2 / maxDistance).toFixed(4));
+			const yPercent = parseFloat((yPosition2 / maxDistance).toFixed(4));
+
+			self.value = {
+				x: xPercent,
+				y: yPercent
+			};
+		}
+
+		function handleUp(event) {
+			if (!self.active) return;
+			// if this is a touch event, make sure it is the right one
+			if (event.changedTouches && self.touchId != event.changedTouches[0].identifier) return;
+			// transition the joystick position back to center
+			stick.style.transition = '.2s';
+			stick.style.transform = `translate3d(0px, 0px, 0px)`;
+			// reset everything
+			self.value = {
+				x: 0,
+				y: 0
+			};
+			self.touchId = null;
+			self.active = false;
+		}
+		stick.addEventListener('mousedown', handleDown);
+		stick.addEventListener('touchstart', handleDown);
+		document.addEventListener('mousemove', handleMove, {
+			passive: false
+		});
+		document.addEventListener('touchmove', handleMove, {
+			passive: false
+		});
+		document.addEventListener('mouseup', handleUp);
+		document.addEventListener('touchend', handleUp);
+	}
 }
 
 const player = new Player()
@@ -691,25 +509,30 @@ let randomInterval = Math.floor(Math.random() * 500) + 1000
 let numEnemies = 0
 let game = {
 	score: 0,
-	lives: 3,
+	lives: 1,
 	level: 1,
 	over: false,
 	active: false
 }
 let score = 0
-let myStick = new JoystickController("stick", 64, 8);
+let myStick = new JoystickController("stick", 32, 8);
+let myStickButton = new JoystickController("stickButton", 2, 0);
 
 //update joystick
-function updateJoystick(){
-	//document.getElementById("status").innerText = "Joystick1: " + JSON.stringify(joystick1.value);
-	if(myStick.value.x > 0.1 && player.position.x < canvas.width - player.width){
+function updateJoystick() {
+	
+	if (myStick.value.x > 0.1 && player.position.x < canvas.width - player.width) {
 		playerRight()
-	}
-	else if(myStick.value.x < -0.1 && player.position.x > 0){	
+	} else if (myStick.value.x < -0.1 && player.position.x > 0) {
 		playerLeft()
 	}
 
+	if(myStickButton.value.x >= 0 || myStickButton.value.y >= 0 || myStickButton.value.x <= 0 || myStickButton.value.y <= 0 && player.opacity == 1) {
+		playerShoot()
+	}
+
 }
+
 //create background particles
 for (let i = 0; i < 100; i++) {
 	particles.push(new Particle({
@@ -750,6 +573,15 @@ function createParticles({
 
 }
 
+if(game.active == true && player.opacity == 1){
+	//player auto shoot
+	setInterval(() => {
+		if (player.opacity == 1) {
+			playerShoot()
+		}
+	}
+	,200)
+}
 
 //animation loop for game
 function animate() {
@@ -838,7 +670,8 @@ function animate() {
 				if (game.lives > 0) {
 					setTimeout(() => {
 						player.opacity = 1
-					}, 1000)
+					},1000)
+					
 				} else if (game.lives === 0) {
 					setTimeout(() => {
 						game.active = false
@@ -846,6 +679,7 @@ function animate() {
 
 					console.log("you lose");
 					game.over = true;
+					document.getElementById("finalscoreEl").innerHTML = score
 
 				}
 			}, 0)
@@ -932,55 +766,14 @@ function animate() {
 		playerStop()
 	}
 
-
-	// function holdit(btn, start) {
-	// 	var t;
-	
-	// 	var repeatLeft = function () {
-	// 		playerLeft();
-	// 		t = setTimeout(repeatLeft, start);
-	// 	}
-	
-	// 	var repeatRight = function () {
-	// 		playerRight();
-	// 		t = setTimeout(repeatRight, start);
-	// 	}
-	
-	// 	btn.mousedown = function() {
-	// 		if(btn.id === "left-button"){
-	// 			repeatLeft();
-	// 		}
-	// 		if(btn.id === "right-button"){
-	// 			repeatRight();
-	// 		}
-	// 	}
-	
-	// 	btn.mouseup = function () {
-	// 		clearTimeout(t);
-	// 	}
-	// };
-
-	// holdit(leftButton, 100);
-
-	// holdit(rightButton, 100);
-
-
-
 	//only spawn new ememies if there are no enemies on the screen
 
 	if (frames % randomInterval === 0) {
 		grids.push(new Grid())
 		frames = 0
-		randomInterval = Math.floor(Math.random() * 500) + 1000
+		randomInterval = Math.floor(Math.random() * 500) + 800
 		console.log(randomInterval);
 	}
-
-	//testing for enemeies only
-	// if(numEnemies === 0){
-	// 	console.log("test");
-	// 	grids.push(new Grid())
-	// 	frames = 0
-	// }
 
 	frames++
 
@@ -1012,30 +805,6 @@ addEventListener('keydown', ({
 			//console.log("arrowright")
 			keys.ArrowRight.pressed = true
 			break;
-		case ' ':
-			//console.log("space")
-
-			// if(key.keyCode === 32 && game.active === true){
-			// 	preventDefault()
-			// }
-
-			//possibly add a timer to prevent spamming
-			//possibly auto shoot in future?
-
-			if(cooldown === false && projectiles.length< 10){
-			projectiles.push(new Projectile({
-				x: player.position.x + player.width / 2,
-				y: player.position.y
-			}, {
-				x: 0,
-				y: -15
-			}))
-			console.log(projectiles)
-			cooldown = true
-			setTimeout(() => cooldown = false, 150);
-			}
-			
-			break;
 	}
 })
 
@@ -1058,29 +827,8 @@ addEventListener('keyup', ({
 		case 'ArrowRight':
 			keys.ArrowRight.pressed = false
 			break;
-		case ' ':
-			//console.log("spaceoff")
-			break;
 	}
 })
-
-
-//on screen button listeners
-
-document.querySelector("#shoot-button").addEventListener("click", () => {
-	projectiles.push(new Projectile({
-		x: player.position.x + player.width / 2,
-		y: player.position.y
-	}, {
-		x: 0,
-		y: -15
-	}))
-	console.log(projectiles)
-})
-
-
-
-
 
 
 //helper functions for player movement
@@ -1099,19 +847,29 @@ function playerStop() {
 	player.rotation = 0
 }
 
+function playerShoot() {
+	if (cooldown === false && projectiles.length < 10) {
+		projectiles.push(new Projectile({
+			x: player.position.x + player.width / 2,
+			y: player.position.y
+		}, {
+			x: 0,
+			y: -15
+		}))
+		console.log(projectiles)
+		cooldown = true
+		setTimeout(() => cooldown = false, 200);
+	}
+}
 
 //sleep function
 function sleep(milliseconds) {
 	const date = Date.now();
 	let currentDate = null;
 	do {
-	  currentDate = Date.now();
+		currentDate = Date.now();
 	} while (currentDate - date < milliseconds);
-  }
-
-
-
-
+}
 
 
 
@@ -1139,5 +897,3 @@ function start() {
 		toggleScreen("title-window", false)
 	}
 }
-
-
