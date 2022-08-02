@@ -509,7 +509,7 @@ let randomInterval = Math.floor(Math.random() * 500) + 1000
 let numEnemies = 0
 let game = {
 	score: 0,
-	lives: 1,
+	lives: 3,
 	level: 1,
 	over: false,
 	active: false
