@@ -169,74 +169,8 @@ body {
 
 #stickButton{
    display: hidden;
-    
 }
 
-/* #shoot-button {
-    z-index:2;
-    font: bold 1em 'Press Start 2P';
-    padding: 5px 10px 5px 10px ;
-    background-color: green;
-    text-shadow: -1px -1px black, 1px 1px white;
-    color: lightgray;
-	border-radius: 7px;
-    box-shadow: 0 .2em gray; 
-    cursor: pointer;
-    position: absolute;
-    bottom: 50px;
-    left: 250px;
-} */
-
-/* #shoot-button:active {
-    background-color: #3e8e41;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-} */
-
-/* #left-button {
-    
-    z-index: 2;
-    position: absolute;
-    bottom: 50px;
-    left: 160px;
-    font: bold 1em 'Press Start 2P';
-    padding: 5px 10px 5px 10px ;
-    background-color: red;
-    text-shadow: -1px -1px black, 1px 1px white;
-    color: lightgray;
-	border-radius: 7px;
-    box-shadow: 0 .2em gray; 
-    cursor: pointer;
-
-} */
-
-/* #left-button:active {
-    background-color: red;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-} */
-
-/* #right-button {
-    
-    z-index:2;
-    position: absolute;
-    bottom: 50px;
-    left: 260px;
-    font: bold 1em 'Press Start 2P';
-    padding: 5px 10px 5px 10px ;
-    background-color: red;
-    text-shadow: -1px -1px black, 1px 1px white;
-    color: lightgray;
-	border-radius: 7px;
-    box-shadow: 0 .2em gray; 
-    cursor: pointer;
-} */
-
-/* #right-button:active {
-    background-color: red;
-    box-shadow: 0 5px #666;
-    transform: translateY(4px);
-} */
 
 /* game over window */
 #game-over-window {
@@ -314,6 +248,10 @@ body {
         transform: translate3d(0px, 0px, 0px);
     }
 
+    #stickButton{
+        display: hidden;
+     }
+
 }
 
 @media (max-width: 800px) {
@@ -373,6 +311,10 @@ body {
         transition: all 0.2s ease 0s; 
         transform: translate3d(0px, 0px, 0px);
     }
+
+    #stickButton{
+        display: hidden;
+     }
 
 }
 
@@ -435,6 +377,10 @@ body {
         transform: translate3d(0px, 0px, 0px);
     }
 
+    #stickButton{
+        display: hidden;
+     }
+
 }
 
 @media (max-width: 360px) {
@@ -498,6 +444,10 @@ body {
         /* transform: translate(-50%, -50%); */
 
     }
+
+    #stickButton{
+        display: hidden;
+     }
 }
 
 @media (max-width: 360px) {
@@ -561,6 +511,10 @@ body {
         /* transform: translate(-50%, -50%); */
 
     }
+
+    #stickButton{
+        display: hidden;
+     }
 }
 
 
