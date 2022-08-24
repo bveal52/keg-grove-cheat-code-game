@@ -44,6 +44,15 @@ body {
     margin: 0;
 }
 
+#level {
+    position: absolute;
+    top: 10px;
+    right: calc(50% - 25px);
+    color: white;
+    font: bold 0.55em 'Press Start 2P';
+    margin: 0;
+}
+
 #game-window {
     position: relative;
 }

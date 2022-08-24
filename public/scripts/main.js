@@ -7,6 +7,7 @@
 let canvas = document.querySelector("#canvas");
 const scoreEl = document.querySelector("#scoreEl");
 const livesEl = document.querySelector("#livesEl");
+const levelEl = document.querySelector("#levelEl");
 const leftButton = document.querySelector("#left-button")
 const rightButton = document.querySelector("#right-button")
 
@@ -507,12 +508,14 @@ const keys = {
 let frames = 0
 let randomInterval = Math.floor(Math.random() * 500) + 1000
 let numEnemies = 0
+let numGridsSpliced = 0
 let game = {
 	score: 0,
 	lives: 3,
 	level: 1,
 	over: false,
-	active: false
+	active: false,
+	won: false
 }
 let score = 0
 let myStick = new JoystickController("stick", 32, 8);
@@ -590,6 +593,7 @@ function animate() {
 		toggleScreen("title-window", true)
 		toggleScreen("game-window", false)
 		toggleScreen("game-over-window", false)
+		toggleScreen("game-won-window", false)
 		return
 	}
 
@@ -597,7 +601,17 @@ function animate() {
 		setTimeout(() => {
 			toggleScreen("game-window", false)
 			toggleScreen("title-window", false)
+			toggleScreen("game-won-window", false)
 			toggleScreen("game-over-window", true)
+		}, 2000)
+	}
+
+	if (game.won) {
+		setTimeout(() => {
+			toggleScreen("game-window", false)
+			toggleScreen("title-window", false)
+			toggleScreen("game-won-window", false)
+			toggleScreen("game-won-window", true)
 		}, 2000)
 	}
 
@@ -750,6 +764,58 @@ function animate() {
 								grid.position.x = firstInvader.position.x
 							} else {
 								grids.splice(gridIndex, 1)
+								numGridsSpliced++
+								//Creating level System for 1-10
+								if(numGridsSpliced == 1){
+									game.level = 2
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 3){
+									game.level = 3
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 6){
+									game.level = 4
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 10){
+									game.level = 5
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 15){
+									game.level = 6
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 21){
+									game.level = 7
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 28){
+									game.level = 8
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 37){
+									game.level = 9
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numGridsSpliced == 47){
+									game.level = 10
+									levelEl.innerHTML = game.level	
+								}
+
+								if(numebrGridsSpliced == 57) {
+									game.won = true
+									document.getElementById("finalscoreEl").innerHTML = score
+								}
+
 							}
 						}
 					}, 0)
@@ -768,7 +834,7 @@ function animate() {
 
 	//only spawn new ememies if there are no enemies on the screen
 
-	if (frames % randomInterval === 0) {
+	if (frames % randomInterval === 0 || grids.length == 0) {
 		grids.push(new Grid())
 		frames = 0
 		randomInterval = Math.floor(Math.random() * 500) + 800
@@ -891,7 +957,13 @@ function start() {
 		toggleScreen("game-window", true)
 		game.active = true
 		animate()
-	} else {
+	} else if(game.won != true) {
+		toggleScreen("game-over-window", true)
+		toggleScreen("game-window", false)
+		toggleScreen("title-window", false)
+	}
+	else{
+		toggleScreen("game-won-window", true)
 		toggleScreen("game-over-window", true)
 		toggleScreen("game-window", false)
 		toggleScreen("title-window", false)

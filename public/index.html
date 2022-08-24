@@ -35,6 +35,7 @@
   <div id="game-window" class="screen">
     <p id='score'><span>Score:</span><span id="scoreEl">0</span></p>
     <p id='lives'><span>Lives:</span><span id="livesEl">3</span></p>
+    <p id='level'><span>Level:</span><span id="levelEl">1</span></p>
     <!-- <p id="scores">
       Joystick
     </p> -->
@@ -63,6 +64,12 @@
 
   <div id="game-over-window" class="screen">
     <p id="game-over-text">Game Over!</p>
+    <p id='final-score'><span>Final Score:</span><span id="finalscoreEl"></span></p>
+      <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
+  </div>
+
+  <div id="game-won-window" class="screen">
+    <p id="game-over-text">You Won!</p>
     <p id='final-score'><span>Final Score:</span><span id="finalscoreEl"></span></p>
       <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
   </div>
