@@ -35,6 +35,14 @@ body {
     font: bold 2em 'Press Start 2P';
 }
 
+#game-won-text{
+    position: absolute;
+    top: 40%;
+    left: calc(50% - 150px);
+    color: white;
+    font: bold 2em 'Press Start 2P';
+}
+
 #lives {
     position: absolute;
     top: 10px;
@@ -47,7 +55,16 @@ body {
 #level {
     position: absolute;
     top: 10px;
-    right: calc(50% - 25px);
+    right: calc(50%);
+    color: white;
+    font: bold 0.55em 'Press Start 2P';
+    margin: 0;
+}
+
+#wave {
+    position: absolute;
+    top: 10px;
+    right: calc(33.5%);
     color: white;
     font: bold 0.55em 'Press Start 2P';
     margin: 0;
@@ -104,6 +121,7 @@ body {
     /* position: absolute; */
 }
 
+
 #keg-grove-logo {
     max-width: 35%;
     height: auto;
@@ -112,6 +130,16 @@ body {
     position: absolute;
     right: 10px;
     bottom: 10px;
+}
+
+#k-logo {
+    max-width: 35%;
+    height: auto;
+    width: auto\9;
+    /* ie8 */
+    position: absolute;
+    right: 37%;
+    bottom: 45%;
 }
 
 
@@ -163,7 +191,7 @@ body {
 
 #joystick-base{
     position: absolute;
-    bottom: 10%;
+    bottom: 9.95%;
     left: calc(50% - 50px);
 }
 
@@ -171,7 +199,7 @@ body {
 #stick{
     position: absolute; 
     left: calc(50% - 27px); 
-    bottom: 12.57%; 
+    bottom: 9%; 
     transition: all 0.2s ease 0s; 
     transform: translate3d(0px, 0px, 0px);
 }
@@ -183,6 +211,19 @@ body {
 
 /* game over window */
 #game-over-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* opacity: 0.5; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-won-window {
     position: absolute;
     top: 0;
     left: 0;
@@ -341,34 +382,44 @@ body {
         transform: translate(-50%, -50%);
     }
 
+    #k-logo {
+        max-width: 30%;
+        height: auto;
+        width: auto\9;
+        /* ie8 */
+        position: absolute;
+        right: 38%;
+        bottom: 43%;
+    }
+
     #game-title {
         z-index:2;
-        font: bold 1.5em 'Press Start 2P';
+        font: bold 1.4em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
-        top: 34.1%;
-        left: calc(50% - 160px);
+        top: 34.3%;
+        left: calc(50% - 149px);
         color: #211754;
 
     }
     
     #game-title-background-1 {
         z-index:1;
-        font: bold 1.5em 'Press Start 2P';
+        font: bold 1.4em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
-        top: 33.8%;
-        left: calc(50% - 162px);
+        top: 34.1%;
+        left: calc(50% - 151px);
 
     }
 
     #game-title-background-2 {
         z-index:0;
-        font: bold 1.5em 'Press Start 2P';
+        font: bold 1.4em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
-        top: 33.5%;
-        left: calc(50% - 164px);
+        top: 33.8%;
+        left: calc(50% - 153px);
         color: #E43A94;
 
     }
@@ -386,67 +437,17 @@ body {
         transform: translate3d(0px, 0px, 0px);
     }
 
-    #stickButton{
-        display: hidden;
-     }
-
-}
-
-@media (max-width: 360px) {
-    #game-title {
-        z-index:2;
-        font: bold 1.2em 'Press Start 2P';
-        /* padding: 100px; */
-        position: absolute;
-        top: 17.1%;
-        left: 6.5%;
-        color: #211754;
-
-    }
-
-    #game-title-background-1 {
-        z-index:1;
-        font: bold 1.2em 'Press Start 2P';
-        /* padding: 100px; */
-        position: absolute;
-        top: 16.8%;
-        left: 6%;
-
-    }
-
-    #game-title-background-2 {
-        z-index:0;
-        font: bold 1.2em 'Press Start 2P';
-        /* padding: 100px; */
-        position: absolute;
-        top: 16.5%;
-        left: 5.5%;
-        color: #E43A94;
-
-    }
-
-    #start-button {
-        top: 25%;
-        left: calc(50% - 50px);
-    }   
-
-    #cheat-code-logo {
-        max-width: 75%;
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    #stick{
-        left: calc(50% - 27px); 
-        bottom: 13.35%; 
-        transition: all 0.2s ease 0s; 
-        transform: translate3d(0px, 0px, 0px);
-    }
-
     #game-over-text {
-        font: bold 2em 'Press Start 2P';
+        font: bold 1.8em 'Press Start 2P';
+        /* padding: 100px; */
+        position: absolute;
+        top: 45%;
+        /* transform: translate(-50%, -50%); */
+
+    }
+
+    #game-won-text {
+        font: bold 2.2em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
         top: 40%;
@@ -457,12 +458,13 @@ body {
     #stickButton{
         display: hidden;
      }
+
 }
 
 @media (max-width: 360px) {
     #game-title {
         z-index:2;
-        font: bold 1.1em 'Press Start 2P';
+        font: bold 1em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
         top: 17.1%;
@@ -513,10 +515,20 @@ body {
     }
 
     #game-over-text {
-        font: bold 2em 'Press Start 2P';
+        font: bold 1.5em 'Press Start 2P';
         /* padding: 100px; */
         position: absolute;
         top: 40%;
+        /* transform: translate(-50%, -50%); */
+
+    }
+
+    #game-won-text {
+        font: bold 1.5em 'Press Start 2P';
+        /* padding: 100px; */
+        position: absolute;
+        top: 40%;
+        left: 50%;
         /* transform: translate(-50%, -50%); */
 
     }
@@ -525,6 +537,73 @@ body {
         display: hidden;
      }
 }
+
+/* @media (max-width: 360px) {
+    #game-title {
+        z-index:2;
+        font: bold 1.1em 'Press Start 2P';
+       
+        position: absolute;
+        top: 17.1%;
+        left: 6.5%;
+        color: #211754;
+
+    }
+
+    #game-title-background-1 {
+        z-index:1;
+        font: bold 1.1em 'Press Start 2P';
+        
+        position: absolute;
+        top: 16.8%;
+        left: 6%;
+
+    }
+
+    #game-title-background-2 {
+        z-index:0;
+        font: bold 1.1em 'Press Start 2P';
+        
+        position: absolute;
+        top: 16.5%;
+        left: 5.5%;
+        color: #E43A94;
+
+    }
+
+    #start-button {
+        top: 25%;
+        left: calc(50% - 50px);
+    }   
+
+    #cheat-code-logo {
+        max-width: 75%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #stick{
+        left: calc(50% - 27px); 
+        bottom: 13.35%; 
+        transition: all 0.2s ease 0s; 
+        transform: translate3d(0px, 0px, 0px);
+    }
+
+    #game-over-text {
+        font: bold 2em 'Press Start 2P';
+        
+        position: absolute;
+        top: 40%;
+        
+
+    }
+
+    #stickButton{
+        display: hidden;
+     }
+} */
 
 
 body {

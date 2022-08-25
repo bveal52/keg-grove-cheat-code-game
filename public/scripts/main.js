@@ -8,8 +8,41 @@ let canvas = document.querySelector("#canvas");
 const scoreEl = document.querySelector("#scoreEl");
 const livesEl = document.querySelector("#livesEl");
 const levelEl = document.querySelector("#levelEl");
-const leftButton = document.querySelector("#left-button")
-const rightButton = document.querySelector("#right-button")
+const waveEl = document.querySelector("#waveEl");
+
+//number of grids completed
+let numGridsSpliced = 0
+
+//number of grids needed to be spliced to move onto the next level
+let levels ={
+	one: 0,
+	two: 1,
+	three: 3,
+	four: 6,
+	five: 10,
+	six: 15,
+	seven: 21,
+	eight: 28,
+	nine: 37,
+	ten: 46,
+	complete: 56 
+}
+
+let frames = 0
+let randomInterval = Math.floor(Math.random() * 500) + 1000
+let numEnemies = 0
+let waveCount = 0
+let game = {
+	score: 0,
+	lives: 3,
+	level: 1,
+	over: false,
+	active: false,
+	won: false
+}
+let score = 0
+
+
 
 
 //const gamepadCanvas = document.querySelector("#gamepad-canvas")
@@ -39,15 +72,6 @@ function resize_canvas() {
 		console.log(canvas.height);
 	}
 }
-
-
-//bottom 1/3 of the screen is the gamepad
-// gamepadCanvas.width = innerWidth / 1.5;
-// gamepadCanvas.height = innerHeight / 3;
-// console.log(gamepadCanvas.height);
-//gamepadC.moveTo(innerWidth / 2, innerHeight / 2);
-
-
 
 
 
@@ -176,63 +200,63 @@ class Particle {
 	}
 }
 
-class ScoreImg {
+// class ScoreImg {
 
-	constructor({
-		position,
-		velocity,
-		fades
-	}) {
-		this.position = position
-		this.velocity = velocity
-
-
-		const image = new Image()
-		image.src = './imgs/points.png'
-
-		image.onload = () => {
-
-			const scale = 1
-
-			this.image = image
-			this.width = image.width * scale
-			this.height = image.height * scale
-
-			// this.position = {
-			// 	x: canvas.width / 2 - this.width / 2,
-			// 	y: gameScreenBuffer - this.height - 20
-			// 	// x: 200,
-			// 	// y: 200
-			// }
+// 	constructor({
+// 		position,
+// 		velocity,
+// 		fades
+// 	}) {
+// 		this.position = position
+// 		this.velocity = velocity
 
 
-		}
+// 		const image = new Image()
+// 		image.src = './imgs/points.png'
 
-		this.opactiy = 1
-		this.fades = fades
+// 		image.onload = () => {
 
-	}
+// 			const scale = 1
 
-	draw() {
-		c.save()
-		c.globalAlpha = this.opactiy
-		c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-		c.restore()
-	}
+// 			this.image = image
+// 			this.width = image.width * scale
+// 			this.height = image.height * scale
 
-	update() {
+// 			// this.position = {
+// 			// 	x: canvas.width / 2 - this.width / 2,
+// 			// 	y: gameScreenBuffer - this.height - 20
+// 			// 	// x: 200,
+// 			// 	// y: 200
+// 			// }
 
-		if (this.image) {
-			this.draw()
-			this.position.x += this.velocity.x
-			this.position.y += this.velocity.y
 
-			if (this.fades) {
-				this.opactiy -= 0.01
-			}
-		}
-	}
-}
+// 		}
+
+// 		this.opactiy = 1
+// 		this.fades = fades
+
+// 	}
+
+// 	draw() {
+// 		c.save()
+// 		c.globalAlpha = this.opactiy
+// 		c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
+// 		c.restore()
+// 	}
+
+// 	update() {
+
+// 		if (this.image) {
+// 			this.draw()
+// 			this.position.x += this.velocity.x
+// 			this.position.y += this.velocity.y
+
+// 			if (this.fades) {
+// 				this.opactiy -= 0.01
+// 			}
+// 		}
+// 	}
+// }
 
 class InvaderProjectile {
 
@@ -337,8 +361,29 @@ class Grid {
 
 		this.invaders = []
 
-		const columns = Math.floor(Math.random() * 2 + 4)
-		const rows = Math.floor(Math.random() * 2 + 2)
+		let columns = 5
+		let rows = 3
+		// let columns = Math.floor(Math.random() * 2 + 4)
+		// let rows = Math.floor(Math.random() * 2 + 2)
+
+		//increases difficulty for the levels
+		if(numGridsSpliced < levels.three){
+			columns = Math.floor(Math.random() * 2 + 4)
+			rows = Math.floor(Math.random() * 2 + 2)
+			
+		} else if(numGridsSpliced >= levels.three && numGridsSpliced < levels.six) {
+			columns = Math.floor(Math.random() * 2 + 4)
+			rows = Math.floor(Math.random() * 2 + 3)
+		}
+		else if(numGridsSpliced >= levels.six && numGridsSpliced < levels.nine) {
+			columns = Math.floor(Math.random() * 2 + 5)
+			rows = Math.floor(Math.random() * 3 + 3)
+		}
+		 else if(numGridsSpliced >= levels.nine && numGridsSpliced < levels.complete) {
+			columns = Math.floor(Math.random() * 2 + 6)
+			rows = Math.floor(Math.random() * 3 + 4)
+		 }
+
 
 		this.width = columns * 30
 
@@ -370,6 +415,7 @@ class Grid {
 			this.velocity.x = -this.velocity.x
 			this.velocity.y = 30
 		}
+
 	}
 }
 
@@ -505,19 +551,7 @@ const keys = {
 
 }
 
-let frames = 0
-let randomInterval = Math.floor(Math.random() * 500) + 1000
-let numEnemies = 0
-let numGridsSpliced = 0
-let game = {
-	score: 0,
-	lives: 3,
-	level: 1,
-	over: false,
-	active: false,
-	won: false
-}
-let score = 0
+
 let myStick = new JoystickController("stick", 32, 8);
 let myStickButton = new JoystickController("stickButton", 2, 0);
 
@@ -623,21 +657,11 @@ function animate() {
 	c.fillStyle = 'black'
 	c.fillRect(0, 35, canvas.width, canvas.height)
 	c.fillStyle = 'white'
-	c.fillRect(0, canvas.height / 1.2, canvas.width, canvas.height - 200)
+	c.fillRect(0, canvas.height / 1.23, canvas.width, canvas.height - 200)
 
 	updateJoystick()
 
 
-
-	//display.renderButtons(controller.buttons)
-	//controller.testButtons(ongoingTouches);
-
-	//create canvas buttons
-
-	//create gamepad controls
-	// gamepadC.fillStyle = 'white'
-	// gamepadC.fillRect(0, 0, gamepadCanvas.width, gamepadCanvas.height)
-	// gamepadC.fillStyle = 'black'
 
 
 	player.update()
@@ -695,7 +719,7 @@ function animate() {
 					game.over = true;
 					document.getElementById("finalscoreEl").innerHTML = score
 
-				}
+				} 
 			}, 0)
 
 		}
@@ -744,14 +768,13 @@ function animate() {
 
 						//remove invader and projectile
 						if (invaderFound && projectileFound) {
-							score += 100
+							score += 10
 							scoreEl.innerHTML = score
 
 							createParticles({
 								object: invader,
 								fades: true
 							})
-							//createScoreImg({object: invader, fades: true})
 
 							grid.invaders.splice(i, 1)
 							projectiles.splice(j, 1)
@@ -765,56 +788,10 @@ function animate() {
 							} else {
 								grids.splice(gridIndex, 1)
 								numGridsSpliced++
+								waveCount++
+								waveEl.innerHTML = waveCount
 								//Creating level System for 1-10
-								if(numGridsSpliced == 1){
-									game.level = 2
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 3){
-									game.level = 3
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 6){
-									game.level = 4
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 10){
-									game.level = 5
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 15){
-									game.level = 6
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 21){
-									game.level = 7
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 28){
-									game.level = 8
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 37){
-									game.level = 9
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numGridsSpliced == 47){
-									game.level = 10
-									levelEl.innerHTML = game.level	
-								}
-
-								if(numebrGridsSpliced == 57) {
-									game.won = true
-									document.getElementById("finalscoreEl").innerHTML = score
-								}
+								levelCheck()
 
 							}
 						}
@@ -914,6 +891,7 @@ function playerStop() {
 }
 
 function playerShoot() {
+	if(player.opacity != 0){	
 	if (cooldown === false && projectiles.length < 10) {
 		projectiles.push(new Projectile({
 			x: player.position.x + player.width / 2,
@@ -926,6 +904,7 @@ function playerShoot() {
 		cooldown = true
 		setTimeout(() => cooldown = false, 200);
 	}
+	}
 }
 
 //sleep function
@@ -937,7 +916,77 @@ function sleep(milliseconds) {
 	} while (currentDate - date < milliseconds);
 }
 
+//level check function
+function levelCheck() {
+	if(numGridsSpliced == levels.two){
+		game.level = 2
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount
+		
+	}
 
+	if(numGridsSpliced == levels.three){
+		game.level = 3
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount
+	}
+
+	if(numGridsSpliced == levels.four){
+		game.level = 4
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.five){
+		game.level = 5
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount
+	}
+
+	if(numGridsSpliced == levels.six){
+		game.level = 6
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.seven){
+		game.level = 7
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.eight){
+		game.level = 8
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.nine){
+		game.level = 9
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.ten){
+		game.level = 10
+		levelEl.innerHTML = game.level
+		waveCount = 1
+		waveEl.innerHTML = waveCount	
+	}
+
+	if(numGridsSpliced == levels.complete) {
+		game.won = true
+		document.getElementById("winningScoreEl").innerHTML = score
+	}
+}
 
 function startGame() {
 	console.log("start game");
@@ -959,12 +1008,13 @@ function start() {
 		animate()
 	} else if(game.won != true) {
 		toggleScreen("game-over-window", true)
+		toggleScreen("game-won-window", false)
 		toggleScreen("game-window", false)
 		toggleScreen("title-window", false)
 	}
 	else{
 		toggleScreen("game-won-window", true)
-		toggleScreen("game-over-window", true)
+		toggleScreen("game-over-window", false)
 		toggleScreen("game-window", false)
 		toggleScreen("title-window", false)
 	}

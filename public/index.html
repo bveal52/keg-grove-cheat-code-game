@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Press Start 2P'>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Sabo'>
+  <!-- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Sabo'> -->
   <title>Beer Invaders!</title>
 
 </head>
@@ -22,6 +22,8 @@
       <p id="game-title">Beer Invaders!</p>
       <p id="game-title-background-1">Beer Invaders!</p>
       <p id="game-title-background-2">Beer Invaders!</p>
+
+      <img id="k-logo" src="imgs/K logo.png" alt="K Logo">
 
       <p id="stars"></p>
       <p id="stars2"></p>
@@ -36,6 +38,7 @@
     <p id='score'><span>Score:</span><span id="scoreEl">0</span></p>
     <p id='lives'><span>Lives:</span><span id="livesEl">3</span></p>
     <p id='level'><span>Level:</span><span id="levelEl">1</span></p>
+    <p id='wave'><span>Wave:</span><span id="waveEl">1</span></p>
     <!-- <p id="scores">
       Joystick
     </p> -->
@@ -54,6 +57,8 @@
         <div id="stickButton" style="display: hidden">
           <img src="imgs/joystick-red.png">
         </div>
+
+        <img id="keg-grove-logo" src="imgs/keg grove.png" alt="Keg Grove Logo">
       </div>
       
 
@@ -69,8 +74,8 @@
   </div>
 
   <div id="game-won-window" class="screen">
-    <p id="game-over-text">You Won!</p>
-    <p id='final-score'><span>Final Score:</span><span id="finalscoreEl"></span></p>
+    <p id="game-won-text">You Won!</p>
+    <p id='final-score'><span>Final Score:</span><span id="winningScoreEl"></span></p>
       <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
   </div>
 
@@ -81,11 +86,11 @@
   <script src="scripts/popper.js"></script>
   <script src="scripts/bootstrap-material-design.js"></script>
   <script>$("body").bootstrapMaterialDesign();</script>
-  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
   <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
-  <script src="/__/firebase/init.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script> -->
+  <!-- <script src="/__/firebase/init.js"></script> -->
   <script src="scripts/main.js"></script>
 
 
