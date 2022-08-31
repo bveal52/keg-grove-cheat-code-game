@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Press Start 2P'>
-  <!-- <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Sabo'> -->
   <title>Beer Invaders!</title>
 
 </head>
@@ -30,7 +29,6 @@
       <p id="stars3"></p>
       <p id="title"></p>
       
-      <!-- <canvas id="canvas"></canvas> -->
       <button id="start-button" onclick='startGame()'>START</button>
   </div>
 
@@ -39,15 +37,9 @@
     <p id='lives'><span>Lives:</span><span id="livesEl">3</span></p>
     <p id='level'><span>Level:</span><span id="levelEl">1</span></p>
     <p id='wave'><span>Wave:</span><span id="waveEl">1</span></p>
-    <!-- <p id="scores">
-      Joystick
-    </p> -->
+    
     <canvas id='canvas' ></canvas>
-    <!-- <canvas id="gamepad-canvas"></canvas> -->
-      <!-- <button id="shoot-button">Shoot</button> -->
-      <!-- <button id="left-button">Left</button>
-      <button id="right-button">Right</button> -->
-
+    
       <div style="width: 64px">
         <img id="joystick-base" src="imgs/joystick-base.png"/>
         <div id="stick">
@@ -61,10 +53,6 @@
         <img id="keg-grove-logo" src="imgs/keg grove.png" alt="Keg Grove Logo">
       </div>
       
-
-      <!-- <div class="box">Shoot</div>
-      <div class="box">Left</div>
-      <div class="box">Right</div> -->
   </div>
 
   <div id="game-over-window" class="screen">
@@ -75,6 +63,8 @@
 
   <div id="game-won-window" class="screen">
     <p id="game-won-text">You Won!</p>
+    <p id="random-identifier"><span>Your Code:</span><span id="random-number"></span></p>
+    <p id="winning-text"> Take a screenshot of this screen and take it to <span id="keg-grove">Keg Grove Brewery</span> for a prize!</p>
     <p id='final-score'><span>Final Score:</span><span id="winningScoreEl"></span></p>
       <button id="restart-button" onclick="window.location.reload();">Play Again?</button>
   </div>
@@ -86,11 +76,7 @@
   <script src="scripts/popper.js"></script>
   <script src="scripts/bootstrap-material-design.js"></script>
   <script>$("body").bootstrapMaterialDesign();</script>
-  <!-- <script src="/__/firebase/7.18.0/firebase-app.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
-  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script> -->
-  <!-- <script src="/__/firebase/init.js"></script> -->
+
   <script src="scripts/main.js"></script>
 
 

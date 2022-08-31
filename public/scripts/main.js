@@ -34,7 +34,7 @@ let numEnemies = 0
 let waveCount = 0
 let game = {
 	score: 0,
-	lives: 3,
+	lives: 1,
 	level: 1,
 	over: false,
 	active: false,
@@ -625,6 +625,7 @@ function animate() {
 	if (!game.active) {
 		//window.location.href = "title-screen.html"
 		toggleScreen("title-window", true)
+		//toggleScreen("intro-window", false)
 		toggleScreen("game-window", false)
 		toggleScreen("game-over-window", false)
 		toggleScreen("game-won-window", false)
@@ -634,6 +635,7 @@ function animate() {
 	if (game.over) {
 		setTimeout(() => {
 			toggleScreen("game-window", false)
+			//toggleScreen("intro-window", false)
 			toggleScreen("title-window", false)
 			toggleScreen("game-won-window", false)
 			toggleScreen("game-over-window", true)
@@ -643,6 +645,7 @@ function animate() {
 	if (game.won) {
 		setTimeout(() => {
 			toggleScreen("game-window", false)
+			//toggleScreen("intro-window", false)
 			toggleScreen("title-window", false)
 			toggleScreen("game-won-window", false)
 			toggleScreen("game-won-window", true)
@@ -716,8 +719,13 @@ function animate() {
 					}, 2000)
 
 					console.log("you lose");
-					game.over = true;
+					//game.over = true;
+					game.won = true;
+					document.getElementById("winningScoreEl").innerHTML = score;
 					document.getElementById("finalscoreEl").innerHTML = score
+
+					let randomNum = Math.floor(Math.random() * 90000000) + 10000000
+					document.getElementById("random-number").innerHTML = randomNum
 
 				} 
 			}, 0)
@@ -976,7 +984,7 @@ function levelCheck() {
 	}
 
 	if(numGridsSpliced == levels.ten){
-		game.level = 10
+		game.level = 10 
 		levelEl.innerHTML = game.level
 		waveCount = 1
 		waveEl.innerHTML = waveCount	
@@ -985,12 +993,18 @@ function levelCheck() {
 	if(numGridsSpliced == levels.complete) {
 		game.won = true
 		document.getElementById("winningScoreEl").innerHTML = score
+		//get a random number between 10000000 and 99999999
+		let randomNum = Math.floor(Math.random() * 90000000) + 10000000
+		document.getElementById("random-number").innerHTML = randomNum
 	}
 }
 
 function startGame() {
 	console.log("start game");
 	resize_canvas()
+
+	//show intro screen before game starts
+
 	start()
 }
 
@@ -1003,6 +1017,7 @@ function toggleScreen(id, toggle) {
 function start() {
 	if (game.over != true) {
 		toggleScreen("title-window", false)
+		// toggleScreen("intro-window", false)
 		toggleScreen("game-window", true)
 		game.active = true
 		animate()
